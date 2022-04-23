@@ -10,18 +10,16 @@ namespace GameTank.MyObjects
     internal class Obstacle: PartialObstacle
     {
         private List<PartialObstacle> obs;
-        private bool isCanDestroy = true;
 
-        public Obstacle(Point start, int width, int height):base(start, width, height)
+        public Obstacle(Point start, int width, int height, bool isCanDestroy) :base(start, width, height, isCanDestroy)
         {
             Obs = new List<PartialObstacle>();
-            CreateObstacle();
+            CreateObstacle(isCanDestroy);
         }
 
-        public bool IsCanDestroy { get => isCanDestroy; set => isCanDestroy = value; }
         internal List<PartialObstacle> Obs { get => obs; set => obs = value; }
 
-        public void CreateObstacle()
+        public void CreateObstacle(bool isCanDestroy)
         {
             int m = Height / 10;
             int n = Width / 20;
@@ -29,14 +27,15 @@ namespace GameTank.MyObjects
             {
                 for(int j = 0; j < n; j++)
                 {
-                    PartialObstacle p = new PartialObstacle(new Point(Location.X + j * 20, Location.Y + i * 10));
+                    PartialObstacle p = new PartialObstacle(new Point(Loc.X + j * 20, Loc.Y + i * 10));
+                    p.IsCanDestroy = isCanDestroy;
                     Obs.Add(p);
                 }
             }
         }
-        public void DrawObstacle(Graphics grp)
+        public void DrawObstacle()
         {
-            Obs.ForEach(o => o.DrawPartialObstacle(grp));
+            Obs.ForEach(o => o.DrawPartialObstacle());
         }
     }
 }

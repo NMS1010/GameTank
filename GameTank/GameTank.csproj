@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\ACTION.cs" />
+    <Compile Include="Constants\STAGE.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +55,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MyObjects\Bound.cs" />
+    <Compile Include="MyObjects\Bullet.cs" />
     <Compile Include="MyObjects\EnemyTank.cs" />
     <Compile Include="MyObjects\GameStage.cs" />
     <Compile Include="MyObjects\Obstacle.cs" />
@@ -86,6 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Image\love.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

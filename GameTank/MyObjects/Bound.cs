@@ -4,31 +4,39 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GameTank.MyObjects
 {
     public static class Bound
     {
-        public static Bitmap imgBound;
-        public static Rectangle TopBound { get; set; }
-        public static Rectangle LeftBound { get; set; }
-        public static Rectangle BottomBound { get; set; }
-        public static Rectangle RightBound { get; set; }
+        public static Bitmap ImgBound = new Bitmap(Image.FromFile("../../Image/love.jpg"));
+        public static PictureBox TopBound { get; set; }
+        public static PictureBox LeftBound { get; set; }
+        public static PictureBox BottomBound { get; set; }
+        public static PictureBox RightBound { get; set; }
         static Bound()
         {
-            Form1 f = new Form1();
-            TopBound = new Rectangle(f.mainGamePnl.DisplayRectangle.Left, f.mainGamePnl.DisplayRectangle.Top, f.mainGamePnl.Width, 20);
-            LeftBound = new Rectangle(f.mainGamePnl.DisplayRectangle.Left, f.mainGamePnl.DisplayRectangle.Top, 20, f.mainGamePnl.Height);
-            BottomBound = new Rectangle(f.mainGamePnl.DisplayRectangle.Left, f.mainGamePnl.DisplayRectangle.Bottom - 20, f.mainGamePnl.Width, 20);
-            RightBound = new Rectangle(f.mainGamePnl.DisplayRectangle.Right - 20, f.mainGamePnl.DisplayRectangle.Top, 20, f.mainGamePnl.Height);
-            imgBound = new Bitmap(Image.FromFile("../../love.jpg"));
+            TopBound = new PictureBox() { Location = new Point(GameStage.MainGamePnl.DisplayRectangle.Left, GameStage.MainGamePnl.DisplayRectangle.Top), Width = GameStage.MainGamePnl.Width, Height = 20, Image = ImgBound, SizeMode = PictureBoxSizeMode.StretchImage };
+            LeftBound = new PictureBox() { Location = new Point(GameStage.MainGamePnl.DisplayRectangle.Left, GameStage.MainGamePnl.DisplayRectangle.Top), Width = 20, Height = GameStage.MainGamePnl.Height, Image = ImgBound, SizeMode = PictureBoxSizeMode.StretchImage };
+            BottomBound = new PictureBox() { Location = new Point(GameStage.MainGamePnl.DisplayRectangle.Left, GameStage.MainGamePnl.DisplayRectangle.Bottom - 20), Width = GameStage.MainGamePnl.Width, Height = 20, Image = ImgBound, SizeMode = PictureBoxSizeMode.StretchImage };
+            RightBound = new PictureBox() { Location = new Point(GameStage.MainGamePnl.DisplayRectangle.Right - 19, GameStage.MainGamePnl.DisplayRectangle.Top), Width = 20, Height = GameStage.MainGamePnl.Height, Image = ImgBound, SizeMode = PictureBoxSizeMode.StretchImage };
+            
         }
-        public static void DrawBound(Graphics grp)
+        public static void DrawBound()
         {
-            grp.DrawImage(imgBound, TopBound);
-            grp.DrawImage(imgBound, LeftBound);
-            grp.DrawImage(imgBound, BottomBound);
-            grp.DrawImage(imgBound, RightBound);
+            GameStage.MainGamePnl.Controls.Add(TopBound);
+            GameStage.MainGamePnl.Controls.Add(LeftBound);
+            GameStage.MainGamePnl.Controls.Add(BottomBound);
+            GameStage.MainGamePnl.Controls.Add(RightBound);
+        }
+
+        public static bool IsOutRange(PictureBox ptrb, Point p)
+        {
+            if (p.X > ptrb.Location.X && p.X < ptrb.Location.X + ptrb.Width
+                && p.Y > ptrb.Location.Y && p.Y < ptrb.Location.Y + ptrb.Height)
+                return true;
+            return false;
         }
     }
 }

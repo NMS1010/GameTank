@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace GameTank.Constants
 {
-    enum ACTION
+    internal enum STAGE
     {
-        UP,
-        LEFT,
-        DOWN,
-        RIGHT
+        STAGE1,
+        STAGE2,
+        STAGE3
     }
 }
