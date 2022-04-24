@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameTank.Constants;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -31,10 +32,19 @@ namespace GameTank.MyObjects
             GameStage.MainGamePnl.Controls.Add(RightBound);
         }
 
-        public static bool IsOutRange(PictureBox ptrb, Point p)
+        private static bool IsOutRange(PictureBox ptrb, Point p)
         {
             if (p.X > ptrb.Location.X && p.X < ptrb.Location.X + ptrb.Width
                 && p.Y > ptrb.Location.Y && p.Y < ptrb.Location.Y + ptrb.Height)
+                return true;
+            return false;
+        }
+
+        public static bool IsCollisionBound(Point nextLoc, int width, int height, DIRECTION direction)
+        {
+            Tuple<Point, Point> aheadPoints = Utilities.GetAheadPoints(nextLoc, width, height, direction);
+            if (Bound.IsOutRange(Bound.TopBound, aheadPoints.Item1) || Bound.IsOutRange(Bound.BottomBound, aheadPoints.Item1)
+                || Bound.IsOutRange(Bound.LeftBound, aheadPoints.Item1) || Bound.IsOutRange(Bound.RightBound, aheadPoints.Item1))
                 return true;
             return false;
         }

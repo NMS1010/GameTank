@@ -10,7 +10,7 @@ namespace GameTank.MyObjects
 {
     internal class PlayerTank: Tank
     {
-        public PlayerTank(Point loc, STAGE currStage):base(loc, currStage)
+        public PlayerTank(Point loc, bool isOfPlayer) :base(loc, isOfPlayer)
         {
 
         }

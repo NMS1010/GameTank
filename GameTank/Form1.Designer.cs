@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.mainGamePnl = new System.Windows.Forms.Panel();
-            this.bulletTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // mainGamePnl
@@ -60,7 +58,6 @@
         #endregion
 
         public System.Windows.Forms.Panel mainGamePnl;
-        private System.Windows.Forms.Timer bulletTimer;
     }
 }
 

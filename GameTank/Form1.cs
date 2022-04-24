@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using GameTank.MyObjects;
@@ -18,8 +17,7 @@ namespace GameTank
         BufferedGraphics bufferedGraphics;
         BufferedGraphicsContext bufferedGraphicsContext;
         Graphics grp;
-        PlayerTank playerTank;
-        STAGE currState;
+        
         public Form1()
         {
             InitializeComponent();
@@ -36,9 +34,16 @@ namespace GameTank
         }
         private void Render()
         {
+            if (GameStage.PlayerTank == null)
+                return;
             bufferedGraphics.Graphics.Clear(Color.Black);
-            playerTank.DrawTank(grp);
-            playerTank.DrawBullets(grp);
+            GameStage.PlayerTank.DrawTank(grp);
+            GameStage.PlayerTank.DrawBullets(grp);
+            EnemySpawner.Spawn();
+            GameStage.EnemyTankStage.ForEach(o => {
+                o.DrawTank(grp);
+                o.DrawBullets(grp);
+            });
             bufferedGraphics.Render();
         }
         private void mainGamePnl_Paint(object sender, PaintEventArgs e)
@@ -58,39 +63,56 @@ namespace GameTank
             switch (e.KeyCode)
             {
                 case Keys.Up:
-                    playerTank.Move(ACTION.UP);
+                    GameStage.PlayerTank.Move(ACTION.MOVEUP);
                     break;
                 case Keys.Down:
-                    playerTank.Move(ACTION.DOWN);
+                    GameStage.PlayerTank.Move(ACTION.MOVEDOWN);
                     break;
                 case Keys.Left:
-                    playerTank.Move(ACTION.LEFT);
+                    GameStage.PlayerTank.Move(ACTION.MOVELEFT);
                     break;
                 case Keys.Right:
-                    playerTank.Move(ACTION.RIGHT);
+                    GameStage.PlayerTank.Move(ACTION.MOVERIGHT);
                     break;
             }
             Render();
         }
         private void InitGame()
         {
-            currState = STAGE.STAGE1;
-            playerTank= new PlayerTank(new Point(400, 400), currState);
+            PlayerTank playerTank = new PlayerTank(new Point(400, 400), isOfPlayer: true);
+            GameStage.PlayerTank = playerTank;
             GameStage.MainGamePnl = this.mainGamePnl;
-            GameStage.State1(grp);
+            GameStage.State1();
             Bound.DrawBound();
+            Timer renderTimer = new Timer();
+            renderTimer.Tick += renderTimer_Tick;
+
+            Timer enemyTimer = new Timer();
+            enemyTimer.Tick += EnemyTimer_Tick;
+            enemyTimer.Interval = 1500;
+            enemyTimer.Start(); 
+            renderTimer.Start();
         }
 
-        private void bulletTimer_Tick(object sender, EventArgs e)
+        private void EnemyTimer_Tick(object sender, EventArgs e)
         {
+            GameStage.EnemyTankStage.ForEach(o => {
+                o.Fire();
+            });
+            Render();
+        }
+
+        private void renderTimer_Tick(object sender, EventArgs e)
+        {
+            GameStage.EnemyTankStage.ForEach(o => {
+                o.Move((ACTION)Utilities.ChooseEnemyDirection(o));
+            });
             Render();
         }
 
         private void mainGamePnl_Click(object sender, EventArgs e)
         {
-            playerTank.Fire();
-            bulletTimer.Tick += bulletTimer_Tick;
-            bulletTimer.Start();
+            GameStage.PlayerTank.Fire();
         }
 
         private void mainGamePnl_MouseUp(object sender, MouseEventArgs e)

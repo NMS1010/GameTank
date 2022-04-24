@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GameTank.Constants
 {
-    enum ACTION
+    public enum DIRECTION
     {
-        MOVEUP,
-        MOVELEFT,
-        MOVEDOWN,
-        MOVERIGHT
+        UP,
+        LEFT,
+        DOWN,
+        RIGHT
     }
 }

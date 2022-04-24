@@ -11,25 +11,43 @@ namespace GameTank.MyObjects
     internal class Tank
     {
         private Point loc;
+        private Point nextLoc;
         private int width = 40;
         private int height = 40;
         private int speed = 10;
+        private int health = 100;
         private Bitmap tankAvatar;
-        private int direction = 0;
-        private STAGE currStage;
+        private DIRECTION direction = 0;
         private List<Bullet> bullets = new List<Bullet>();
-        private bool isFire = false;
+        private bool isOfPlayer;
+        private Color bulletColor = Color.Yellow;
 
-        public bool IsFire { get => isFire; set => isFire = value; }
         internal List<Bullet> Bullets { get => bullets; set => bullets = value; }
+        public Point Loc { get => loc; set => loc = value; }
+        public int Width { get => width; set => width = value; }
+        public int Height { get => height; set => height = value; }
+        public bool IsOfPlayer { get => isOfPlayer; set => isOfPlayer = value; }
+        public Point NextLoc { get => nextLoc; set => nextLoc = value; }
+        public DIRECTION Direction { get => direction; set => direction = value; }
+        public int Health { get => health; set => health = value; }
 
-        public Tank(Point loc, STAGE currStage)
+        public Tank(Point loc, bool isOfPlayer)
         {
-            this.loc = loc;
-            this.currStage = currStage;
+            IsOfPlayer = isOfPlayer;
+            Loc = loc;
             using(Image imgTank = Image.FromFile("../../Image/playertank.bmp")){
                 tankAvatar = new Bitmap(imgTank); 
             }
+        }
+        public Tank(Point loc, bool isOfPlayer, Color color)
+        {
+            IsOfPlayer = isOfPlayer;
+            Loc = loc;
+            using (Image imgTank = Image.FromFile("../../Image/playertank.bmp"))
+            {
+                tankAvatar = new Bitmap(imgTank);
+            }
+            bulletColor = color;
         }
         private void RotateTank()
         {
@@ -37,17 +55,17 @@ namespace GameTank.MyObjects
             {
                 using (Bitmap temp = new Bitmap(imgTank))
                 {
-                    switch (direction)
+                    switch (Direction)
                     {
-                        case 0:
+                        case DIRECTION.UP:
                             break;
-                        case 90:
+                        case DIRECTION.RIGHT:
                             temp.RotateFlip(RotateFlipType.Rotate90FlipNone);
                             break;
-                        case 180:
+                        case DIRECTION.DOWN:
                             temp.RotateFlip(RotateFlipType.Rotate180FlipNone);
                             break;
-                        case 270:
+                        case DIRECTION.LEFT:
                             temp.RotateFlip(RotateFlipType.Rotate270FlipNone);
                             break;
                     }
@@ -56,126 +74,84 @@ namespace GameTank.MyObjects
                 }
             }
         }
-        public Tuple<Point, Point> GetAheadTankPoints(Point nextLoc)
-        {
-            Tuple<Point, Point> aheadPoint = null;
-            switch (direction)
-            {
-                case 0:
-                    aheadPoint = new Tuple<Point, Point>(new Point(nextLoc.X, nextLoc.Y), new Point(nextLoc.X + width, nextLoc.Y));
-                    break;
-                case 90:
-                    aheadPoint = new Tuple<Point, Point>(new Point(nextLoc.X+ width, nextLoc.Y), new Point(nextLoc.X + width, nextLoc.Y + height));
-                    break;
-                case 180:
-                    aheadPoint = new Tuple<Point, Point>(new Point(nextLoc.X, nextLoc.Y + height), new Point(nextLoc.X + width, nextLoc.Y + height));
-                    break;
-                case 270:
-                    aheadPoint = new Tuple<Point, Point>(new Point(nextLoc.X, nextLoc.Y), new Point(nextLoc.X, nextLoc.Y + height));
-                    break;
-            }
-            return aheadPoint;
-        }
-        public bool CheckCollision(Point nextLoc, List<Obstacle> obstacles)
-        {
-            Tuple<Point, Point> aheadPoints = GetAheadTankPoints(nextLoc);
-            if (Bound.IsOutRange(Bound.TopBound, aheadPoints.Item1) || Bound.IsOutRange(Bound.BottomBound, aheadPoints.Item1)
-                || Bound.IsOutRange(Bound.LeftBound, aheadPoints.Item1) || Bound.IsOutRange(Bound.RightBound, aheadPoints.Item1))
-                return true;
-            foreach (Obstacle obstacle in obstacles)
-            {
-                if (aheadPoints.Item1.X > obstacle.Loc.X && aheadPoints.Item1.X < obstacle.Loc.X + obstacle.Width
-                   && aheadPoints.Item1.Y > obstacle.Loc.Y && aheadPoints.Item1.Y < obstacle.Loc.Y + obstacle.Height)
-                    return true;
-                if (aheadPoints.Item2.X > obstacle.Loc.X && aheadPoints.Item2.X < obstacle.Loc.X + obstacle.Width
-                   && aheadPoints.Item2.Y > obstacle.Loc.Y && aheadPoints.Item2.Y < obstacle.Loc.Y + obstacle.Height)
-                    return true;
-                if(aheadPoints.Item1.Y == obstacle.Loc.Y && aheadPoints.Item2.Y == obstacle.Loc.Y + height)
-                {
-                    if (aheadPoints.Item1.X > obstacle.Loc.X && aheadPoints.Item1.X < obstacle.Loc.X + obstacle.Width
-                   && aheadPoints.Item1.Y >= obstacle.Loc.Y && aheadPoints.Item1.Y <= obstacle.Loc.Y + obstacle.Height)
-                        return true;
-                }
-                if (aheadPoints.Item1.X == obstacle.Loc.X && aheadPoints.Item2.X == obstacle.Loc.X + width)
-                {
-                    if (aheadPoints.Item1.X >= obstacle.Loc.X && aheadPoints.Item1.X <= obstacle.Loc.X + obstacle.Width
-                   && aheadPoints.Item1.Y > obstacle.Loc.Y && aheadPoints.Item1.Y < obstacle.Loc.Y + obstacle.Height)
-                        return true;
-                }
-            }
-            return false;
-        }
-        public bool IsCollision(Point nextLoc)
-        {
-            switch (currStage)
-            {
-                case STAGE.STAGE1:
-                    return CheckCollision(nextLoc, GameStage.ObstaclesStage1);
-            }
-            return false;
-        }
+        
         public void Move(ACTION action)
         {
-            Point nextLoc;
-            if (action == ACTION.UP)
+            if (action == ACTION.MOVEUP)
             {
-                nextLoc = new Point(loc.X, loc.Y - speed);
-                direction = 0;
+                NextLoc = new Point(Loc.X, Loc.Y - speed);
+                Direction = DIRECTION.UP;
             }
-            else if(action == ACTION.DOWN)
+            else if(action == ACTION.MOVEDOWN)
             {
-                nextLoc = new Point(loc.X, loc.Y + speed);
-                direction = 180;
+                NextLoc = new Point(Loc.X, Loc.Y + speed);
+                Direction = DIRECTION.DOWN;
             }
-            else if (action == ACTION.LEFT)
+            else if (action == ACTION.MOVELEFT)
             {
-                nextLoc = new Point(loc.X - speed, loc.Y); 
-                direction = 270;
+                NextLoc = new Point(Loc.X - speed, Loc.Y); 
+                Direction = DIRECTION.LEFT;
             }
             else
             {
-                nextLoc = new Point(loc.X + speed, loc.Y);
-                direction = 90;
+                NextLoc = new Point(Loc.X + speed, Loc.Y);
+                Direction = DIRECTION.RIGHT;
             }
-            if (!IsCollision(nextLoc))
-                loc = nextLoc;
+            if (Utilities.IsCollisionObstacle(NextLoc, Width, Height, Direction) == null && !Bound.IsCollisionBound(NextLoc, Width, Height, Direction))
+            {
+                Loc = NextLoc;
+            }
             RotateTank();
         }
-        public void DrawTank(Graphics grp)
+        public virtual void DrawTank(Graphics grp)
         {
-            grp.DrawImage(tankAvatar, new Rectangle(loc.X, loc.Y, width, height));
-            
+            grp.DrawImage(tankAvatar, new Rectangle(Loc.X, Loc.Y, Width, Height));
         }
 
         public void Fire()
         {
             Point bulletLoc = new Point(0,0);
-            switch (direction)
+            switch (Direction)
             {
-                case 0:
-                    bulletLoc = new Point(loc.X + width/2, loc.Y);
+                case DIRECTION.UP:
+                    bulletLoc = new Point(Loc.X + Width / 2 - 5, Loc.Y);
                     break;
-                case 90:
-                    bulletLoc = new Point(loc.X + width, loc.Y + height / 2);
+                case DIRECTION.RIGHT:
+                    bulletLoc = new Point(Loc.X + Width, Loc.Y + Height / 2 - 5);
                     break;
-                case 180:
-                    bulletLoc = new Point(loc.X + width / 2, loc.Y + height);
+                case DIRECTION.DOWN:
+                    bulletLoc = new Point(Loc.X + Width / 2 - 5, Loc.Y + Height);
                     break;
-                case 270:
-                    bulletLoc = new Point(loc.X, loc.Y + height / 2);
+                case DIRECTION.LEFT:
+                    bulletLoc = new Point(Loc.X, Loc.Y + Height / 2 - 5);
                     break;
             }
-            Bullet b = new Bullet(bulletLoc, direction);
+            Bullet b = new Bullet(bulletLoc, Direction, isOfPlayer, bulletColor);
             Bullets.Add(b);
-            IsFire = true;
+            Timer t = new Timer();
+            t.Tick += T_Tick;
+            t.Start();
             b.Move();
+        }
+
+        private void T_Tick(object sender, EventArgs e)
+        {
+            List<Bullet> rm = new List<Bullet>();
+            Bullets.ForEach(b => {
+                if (!b.IsMoving)
+                    rm.Add(b);
+            });
+            foreach (Bullet b in rm)
+            {
+                Bullets.Remove(b);
+            }
+            rm.Clear();
         }
 
         public void DrawBullets(Graphics grp)
         {
             Bullets.ForEach(b => {
-                if (b.IsMoving) 
-                    b.DrawBullet(grp);
+                b.DrawBullet(grp);
             });
         }
     }
