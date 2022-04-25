@@ -16,11 +16,14 @@ namespace GameTank.MyObjects
         private int height = 40;
         private int speed = 10;
         private int health = 100;
+        private int bulletDamage;
+        private int bulletSpeed;
+
         private Bitmap tankAvatar;
         private DIRECTION direction = 0;
         private List<Bullet> bullets = new List<Bullet>();
         private bool isOfPlayer;
-        private Color bulletColor = Color.Yellow;
+        private Color bulletColor;
 
         internal List<Bullet> Bullets { get => bullets; set => bullets = value; }
         public Point Loc { get => loc; set => loc = value; }
@@ -30,16 +33,10 @@ namespace GameTank.MyObjects
         public Point NextLoc { get => nextLoc; set => nextLoc = value; }
         public DIRECTION Direction { get => direction; set => direction = value; }
         public int Health { get => health; set => health = value; }
+        public int BulletSpeed { get => bulletSpeed; set => bulletSpeed = value; }
+        public int BulletDamage { get => bulletDamage; set => bulletDamage = value; }
 
-        public Tank(Point loc, bool isOfPlayer)
-        {
-            IsOfPlayer = isOfPlayer;
-            Loc = loc;
-            using(Image imgTank = Image.FromFile("../../Image/playertank.bmp")){
-                tankAvatar = new Bitmap(imgTank); 
-            }
-        }
-        public Tank(Point loc, bool isOfPlayer, Color color)
+        public Tank(Point loc, bool isOfPlayer, Color color, int bulletSpeed, int damage, int health)
         {
             IsOfPlayer = isOfPlayer;
             Loc = loc;
@@ -48,6 +45,9 @@ namespace GameTank.MyObjects
                 tankAvatar = new Bitmap(imgTank);
             }
             bulletColor = color;
+            BulletDamage = damage;
+            BulletSpeed = bulletSpeed;
+            Health = health;
         }
         private void RotateTank()
         {
@@ -126,7 +126,7 @@ namespace GameTank.MyObjects
                     bulletLoc = new Point(Loc.X, Loc.Y + Height / 2 - 5);
                     break;
             }
-            Bullet b = new Bullet(bulletLoc, Direction, isOfPlayer, bulletColor);
+            Bullet b = new Bullet(bulletLoc, Direction, isOfPlayer, bulletColor, BulletSpeed, BulletDamage);
             Bullets.Add(b);
             Timer t = new Timer();
             t.Tick += T_Tick;

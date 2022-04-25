@@ -10,9 +10,9 @@ namespace GameTank.MyObjects
 {
     internal class PlayerTank: Tank
     {
-        public PlayerTank(Point loc, bool isOfPlayer) :base(loc, isOfPlayer)
+        public PlayerTank(Point loc, bool isOfPlayer, Color bulletColor, int bulletSpeed, int bulletDamage, int health) :base(loc, isOfPlayer, bulletColor, bulletSpeed, bulletDamage, health)
         {
-
+            
         }
     }
 }

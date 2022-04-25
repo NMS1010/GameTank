@@ -15,19 +15,21 @@ namespace GameTank.MyObjects
         public static void Spawn(Graphics grp)
         {
             EnemyPerTurn = GameStage.enemyPerTurn;
+
             bool isSpawn = false;
-            HashSet<int> numbers = Utilities.RandomNotDup(EnemyPerTurn, 0, GameStage.SampleEnemyTankStage.Count - 1);
+            HashSet<int> numbers = Utilities.RandomNotDup(EnemyPerTurn, 0, GameStage.SampleEnemyTanks.Count - 1);
             foreach (int i in numbers)
             {
-                if (GameStage.EnemyTankStage.Count < EnemyPerTurn && !GameStage.EnemyTankStage.Contains(GameStage.SampleEnemyTankStage[i]))
+                if (GameStage.EnemyTanks.Count < EnemyPerTurn && !GameStage.EnemyTanks.Contains(GameStage.SampleEnemyTanks[i])
+                    && GameStage.numberEnemy >= GameStage.enemyPerTurn)
                 {
-                    GameStage.SampleEnemyTankStage[i].Health = 100;
-                    GameStage.SampleEnemyTankStage[i].LockMove = true;
-                    GameStage.EnemyTankStage.Add(GameStage.SampleEnemyTankStage[i]);
+                    GameStage.SampleEnemyTanks[i].Health = 100;
+                    GameStage.SampleEnemyTanks[i].LockMove = true;
+                    GameStage.EnemyTanks.Add(GameStage.SampleEnemyTanks[i]);
                     isSpawn = true;
                 }
             }
-            GameStage.EnemyTankStage.ForEach(o =>
+            GameStage.EnemyTanks.ForEach(o =>
             {
                 o.DrawTank(grp);
                 o.DrawBullets(grp);
@@ -44,9 +46,9 @@ namespace GameTank.MyObjects
         private static void T_Tick(object sender, EventArgs e)
         {
             count++;
-            if(count == 20)
+            if(count == 10)
             {
-                GameStage.EnemyTankStage.ForEach(o => {
+                GameStage.EnemyTanks.ForEach(o => {
                     if (o.LockMove)
                         o.LockMove = false;
                 });

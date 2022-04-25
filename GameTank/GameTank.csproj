@@ -49,6 +49,7 @@
     <Compile Include="Constants\ACTION.cs" />
     <Compile Include="Constants\DIRECTION.cs" />
     <Compile Include="Constants\STAGE.cs" />
+    <Compile Include="Constants\TANK.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

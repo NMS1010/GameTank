@@ -12,32 +12,26 @@ namespace GameTank.MyObjects
     internal class Bullet
     {
         private int speed = 13;
-        private int damage = 20;
-        private Color bulletColor = Color.Yellow;
+        private int damage;
         private Point loc;
         private int width = 7;
         private int height = 7;
         private DIRECTION direction;
-        private bool isMoving = false;
         private bool isOfPlayer;
+        private bool isMoving = false;
+        private Color bulletColor;
         Timer t;
 
-        public Bullet(Point loc, DIRECTION direction, bool isOfPlayer)
-        {
-            Loc = loc;
-            Direction = direction;
-            IsOfPlayer = isOfPlayer;
-            t = new Timer();
-            t.Tick += T_Tick;
-        }
-        public Bullet(Point loc, DIRECTION direction, bool isOfPlayer, Color color)
+        public Bullet(Point loc, DIRECTION direction, bool isOfPlayer, Color color, int bulletSpeed, int damage)
         {
             Loc = loc;
             Direction = direction;
             IsOfPlayer = isOfPlayer;
             bulletColor = color;
+            Damage = damage;
             t = new Timer();
             t.Tick += T_Tick;
+            t.Interval = bulletSpeed;
         }
         public Color BulletColor { get => bulletColor; set => bulletColor = value; }
         public Point Loc { get => loc; set => loc = value; }
@@ -81,7 +75,7 @@ namespace GameTank.MyObjects
             {
                 t.Stop();
                 return;
-            }
+            }  
             Point bulletPoint = NextLocation();
             Utilities.HandleBulletCollision(this, bulletPoint);
             if (!IsMoving)

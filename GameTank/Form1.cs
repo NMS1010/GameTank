@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using GameTank.MyObjects;
 using GameTank.Constants;
+using System.Threading.Tasks;
 
 namespace GameTank
 {
@@ -17,7 +18,9 @@ namespace GameTank
         BufferedGraphics bufferedGraphics;
         BufferedGraphicsContext bufferedGraphicsContext;
         Graphics grp;
-        
+        Timer renderTimer;
+        Timer enemyFireTimer;
+        Timer enemyMoveTimer;
         public Form1()
         {
             InitializeComponent();
@@ -37,10 +40,23 @@ namespace GameTank
             if (GameStage.PlayerTank == null)
                 return;
             bufferedGraphics.Graphics.Clear(Color.Black);
+
+            playerTankDamageLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
+            playerTankAttackSpeedLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
             GameStage.PlayerTank.DrawTank(grp);
             GameStage.PlayerTank.DrawBullets(grp);
-            EnemySpawner.Spawn(grp);
-            
+
+            if (GameStage.numberEnemy == 0)
+            {
+                enemyMoveTimer.Stop();
+                enemyFireTimer.Stop();
+
+                GameStage.PlayerTank.Bullets.Clear();
+                GameStage.PlayerTank.DrawBullets(grp);
+            }
+            else
+                EnemySpawner.Spawn(grp);
+
             bufferedGraphics.Render();
         }
         private void mainGamePnl_Paint(object sender, PaintEventArgs e)
@@ -71,52 +87,111 @@ namespace GameTank
                 case Keys.Right:
                     GameStage.PlayerTank.Move(ACTION.MOVERIGHT);
                     break;
+                case Keys.Space:
+                    GameStage.PlayerTank.Fire();
+                    break;
+
             }
             Render();
         }
-        private void InitGame()
+
+        private void SetTimer()
         {
-            PlayerTank playerTank = new PlayerTank(new Point(400, 400), isOfPlayer: true);
-            GameStage.PlayerTank = playerTank;
-            GameStage.MainGamePnl = this.mainGamePnl;
-            GameStage.State1();
-            
-            Timer renderTimer = new Timer();
+            renderTimer = new Timer();
             renderTimer.Tick += renderTimer_Tick;
 
-            Timer enemyTimer = new Timer();
-            enemyTimer.Tick += EnemyTimer_Tick;
-            enemyTimer.Interval = 1500;
-            enemyTimer.Start(); 
+            enemyFireTimer = new Timer();
+            enemyFireTimer.Tick += EnemyFireTimer_Tick;
+            enemyFireTimer.Interval = 1500;
+
+            enemyMoveTimer = new Timer();
+            enemyMoveTimer.Tick += EnemyMoveTimer_Tick;
+
+            enemyFireTimer.Start();
+            enemyMoveTimer.Start();
             renderTimer.Start();
         }
 
-        private void EnemyTimer_Tick(object sender, EventArgs e)
+        private void SetImage()
         {
-            GameStage.EnemyTankStage.ForEach(o => {
-                if(!o.LockMove)
-                    o.Fire();
-            });
-            Render();
+            using (Image heartImg = Image.FromFile("../../Image/heart.png"))
+            {
+                heartPtrb.Image = new Bitmap(heartImg);
+            }
+            using (Image nextBtnImg = Image.FromFile("../../Image/nextBtn.png"))
+            {
+                nextStagePtrb.Image = new Bitmap(nextBtnImg);
+            }
+            using (Image againBtnImg = Image.FromFile("../../Image/againBtn.png"))
+            {
+                againPtrb.Image = new Bitmap(againBtnImg);
+            }
+            using (Image homeBtnImg = Image.FromFile("../../Image/homeBtn.png"))
+            {
+                homePtrb.Image = new Bitmap(homeBtnImg);
+            }
+        }
+        private void InitGame()
+        {
+            SetImage();
+            PlayerTank playerTank = new PlayerTank(loc: new Point(400, 400), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: 100, bulletDamage: 20, health: 1000);
+            GameStage.PlayerTank = playerTank;
+            GameStage.MainGamePnl = this.mainGamePnl;
+            GameStage.TotalPlayerHealth = totalHealthPtrb;
+            GameStage.CurrentPlayerHealth = currentHealthPtrb;
+
+            GameStage.Stage1();
+
+            SetTimer();
         }
 
-        private void renderTimer_Tick(object sender, EventArgs e)
+        private void EnemyMoveTimer_Tick(object sender, EventArgs e)
         {
-            GameStage.EnemyTankStage.ForEach(o => {
+            GameStage.EnemyTanks.ForEach(o => {
                 if (!o.LockMove)
                     o.Move((ACTION)Utilities.ChooseEnemyDirection(o));
             });
             Render();
         }
 
-        private void mainGamePnl_Click(object sender, EventArgs e)
+        private void EnemyFireTimer_Tick(object sender, EventArgs e)
         {
-            GameStage.PlayerTank.Fire();
+            GameStage.EnemyTanks.ForEach(o => {
+                if (!o.LockMove)
+                    o.Fire();
+            });
+            Render();
         }
 
-        private void mainGamePnl_MouseUp(object sender, MouseEventArgs e)
+        private async void renderTimer_Tick(object sender, EventArgs e)
         {
-            
+            Render();
+            if(GameStage.numberEnemy == 0)
+            {
+                await Task.Delay(2000);
+                modalPtrb.Visible = true;
+                (sender as Timer).Stop();
+            }
+        }
+
+        private void homePtrb_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void nextStagePtrb_Click(object sender, EventArgs e)
+        {
+            GameStage.ClearStage();
+            GameStage.Stage2();
+            await Task.Delay(1000);
+            modalPtrb.Visible = false;
+
+            SetTimer();
+        }
+
+        private void againPtrb_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

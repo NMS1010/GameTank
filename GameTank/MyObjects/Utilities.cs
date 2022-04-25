@@ -100,7 +100,7 @@ namespace GameTank.MyObjects
 
         public static void HandleBulletCollision(Bullet bullet, Point bulletPoint)
         {
-            PartialObstacle ob = Utilities.IsCollisionObstacle(bulletPoint, bullet.Width, bullet.Height, bullet.Direction);
+            PartialObstacle ob = IsCollisionObstacle(bulletPoint, bullet.Width, bullet.Height, bullet.Direction);
             if (ob != null)
             {
                 if (ob.IsCanDestroy)
@@ -111,34 +111,29 @@ namespace GameTank.MyObjects
                         GameStage.MainGamePnl.Controls.Remove(ob.Ob);
                         GameStage.PartialObstacle.Remove(ob);
                     }
-                    ob = null;
                 }
                 bullet.IsMoving = false;
             }
             if (bullet.IsOfPlayer)
             {
-                EnemyTank enemyTank = Utilities.IsCollisionEnemy(bullet.Loc, GameStage.EnemyTankStage, bullet.Width, bullet.Height);
+                EnemyTank enemyTank = IsCollisionEnemy(bullet.Loc, GameStage.EnemyTanks, bullet.Width, bullet.Height);
                 if (enemyTank != null)
                 {
                     enemyTank.Health -= bullet.Damage;
                     if (enemyTank.Health <= 0)
                     {
-                        GameStage.EnemyTankStage.Remove(enemyTank);
+                        GameStage.EnemyTanks.Remove(enemyTank);
                         GameStage.numberEnemy--;
-                        if (GameStage.numberEnemy == 0)
-                        {
-                            MessageBox.Show("Pass Stage");
-                        }
                     }
                     bullet.IsMoving = false;
-                    enemyTank = null;
                 }
             }
             else
             {
-                if (Utilities.CheckHitTank(GameStage.PlayerTank, bullet.Loc, GameStage.PlayerTank.Width, GameStage.PlayerTank.Height))
+                if (CheckHitTank(GameStage.PlayerTank, bullet.Loc, bullet.Width, bullet.Height))
                 {
                     GameStage.PlayerTank.Health -= bullet.Damage;
+                    GameStage.CurrentPlayerHealth.Width = (GameStage.PlayerTank.Health * GameStage.TotalPlayerHealth.Width) / (int)TANK.PLAYER_HEALTH;
                     if (GameStage.PlayerTank.Health <= 0)
                     {
                         GameStage.PlayerTank = null;
