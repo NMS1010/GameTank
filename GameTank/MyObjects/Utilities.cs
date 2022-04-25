@@ -80,12 +80,77 @@ namespace GameTank.MyObjects
             return null;
         }
 
+        public static HashSet<int> RandomNotDup(int quantity, int min, int max)
+        {
+            Random random = new Random();
+            HashSet<int> numbers = new HashSet<int>();
+            while (numbers.Count < quantity)
+            {
+                numbers.Add(random.Next(min, max + 1));
+            }
+            return numbers;
+        }
         public static int ChooseEnemyDirection(EnemyTank e)
         {
             if (IsCollisionObstacle(e.NextLoc, e.Width, e.Height, e.Direction) == null
                 && !Bound.IsCollisionBound(e.NextLoc, e.Width, e.Height, e.Direction))
                 return (int)e.Direction;
             return (new Random()).Next(0, 4);
+        }
+
+        public static void HandleBulletCollision(Bullet bullet, Point bulletPoint)
+        {
+            PartialObstacle ob = Utilities.IsCollisionObstacle(bulletPoint, bullet.Width, bullet.Height, bullet.Direction);
+            if (ob != null)
+            {
+                if (ob.IsCanDestroy)
+                {
+                    ob.Health -= bullet.Damage;
+                    if (ob.Health <= 0)
+                    {
+                        GameStage.MainGamePnl.Controls.Remove(ob.Ob);
+                        GameStage.PartialObstacle.Remove(ob);
+                    }
+                    ob = null;
+                }
+                bullet.IsMoving = false;
+            }
+            if (bullet.IsOfPlayer)
+            {
+                EnemyTank enemyTank = Utilities.IsCollisionEnemy(bullet.Loc, GameStage.EnemyTankStage, bullet.Width, bullet.Height);
+                if (enemyTank != null)
+                {
+                    enemyTank.Health -= bullet.Damage;
+                    if (enemyTank.Health <= 0)
+                    {
+                        GameStage.EnemyTankStage.Remove(enemyTank);
+                        GameStage.numberEnemy--;
+                        if (GameStage.numberEnemy == 0)
+                        {
+                            MessageBox.Show("Pass Stage");
+                        }
+                    }
+                    bullet.IsMoving = false;
+                    enemyTank = null;
+                }
+            }
+            else
+            {
+                if (Utilities.CheckHitTank(GameStage.PlayerTank, bullet.Loc, GameStage.PlayerTank.Width, GameStage.PlayerTank.Height))
+                {
+                    GameStage.PlayerTank.Health -= bullet.Damage;
+                    if (GameStage.PlayerTank.Health <= 0)
+                    {
+                        GameStage.PlayerTank = null;
+                        MessageBox.Show("Lose");
+                    }
+                    bullet.IsMoving = false;
+                }
+            }
+            if (Bound.IsCollisionBound(bulletPoint, bullet.Width, bullet.Height, bullet.Direction))
+            {
+                bullet.IsMoving = false;
+            }
         }
     }
 }

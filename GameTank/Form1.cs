@@ -39,11 +39,8 @@ namespace GameTank
             bufferedGraphics.Graphics.Clear(Color.Black);
             GameStage.PlayerTank.DrawTank(grp);
             GameStage.PlayerTank.DrawBullets(grp);
-            EnemySpawner.Spawn();
-            GameStage.EnemyTankStage.ForEach(o => {
-                o.DrawTank(grp);
-                o.DrawBullets(grp);
-            });
+            EnemySpawner.Spawn(grp);
+            
             bufferedGraphics.Render();
         }
         private void mainGamePnl_Paint(object sender, PaintEventArgs e)
@@ -83,7 +80,7 @@ namespace GameTank
             GameStage.PlayerTank = playerTank;
             GameStage.MainGamePnl = this.mainGamePnl;
             GameStage.State1();
-            Bound.DrawBound();
+            
             Timer renderTimer = new Timer();
             renderTimer.Tick += renderTimer_Tick;
 
@@ -97,7 +94,8 @@ namespace GameTank
         private void EnemyTimer_Tick(object sender, EventArgs e)
         {
             GameStage.EnemyTankStage.ForEach(o => {
-                o.Fire();
+                if(!o.LockMove)
+                    o.Fire();
             });
             Render();
         }
@@ -105,7 +103,8 @@ namespace GameTank
         private void renderTimer_Tick(object sender, EventArgs e)
         {
             GameStage.EnemyTankStage.ForEach(o => {
-                o.Move((ACTION)Utilities.ChooseEnemyDirection(o));
+                if (!o.LockMove)
+                    o.Move((ACTION)Utilities.ChooseEnemyDirection(o));
             });
             Render();
         }

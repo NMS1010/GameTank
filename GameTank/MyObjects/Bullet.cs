@@ -47,6 +47,7 @@ namespace GameTank.MyObjects
         public bool IsMoving { get => isMoving; set => isMoving = value; }
         public int Speed { get => speed; set => speed = value; }
         public bool IsOfPlayer { get => isOfPlayer; set => isOfPlayer = value; }
+        public int Damage { get => damage; set => damage = value; }
 
         public Point NextLocation()
         {
@@ -81,53 +82,12 @@ namespace GameTank.MyObjects
                 t.Stop();
                 return;
             }
-            Point temp = NextLocation();
-            PartialObstacle ob = Utilities.IsCollisionObstacle(temp, Width, Height, Direction);
-            if (ob != null)
-            {
-                if (ob.IsCanDestroy)
-                {
-                    ob.Health -= damage;
-                    if (ob.Health <= 0)
-                    {
-                        GameStage.MainGamePnl.Controls.Remove(ob.Ob);
-                        GameStage.PartialObstacle.Remove(ob);
-                    }
-                }
-                IsMoving = false;
-            }
-            if (IsOfPlayer)
-            {
-                EnemyTank enemyTank = Utilities.IsCollisionEnemy(Loc, GameStage.EnemyTankStage, Width, Height);
-                if (enemyTank != null)
-                {
-                    enemyTank.Health -= damage;
-                    if(enemyTank.Health <= 0)
-                        GameStage.EnemyTankStage.Remove(enemyTank);
-                    IsMoving = false;
-                }
-            }
-            else
-            {
-                if (Utilities.CheckHitTank(GameStage.PlayerTank, Loc, GameStage.PlayerTank.Width, GameStage.PlayerTank.Height))
-                {
-                    GameStage.PlayerTank.Health -= damage;
-                    if (GameStage.PlayerTank.Health <= 0)
-                    {
-                        GameStage.PlayerTank = null;
-                        MessageBox.Show("Lose");
-                    }
-                    IsMoving = false;
-                }
-            }
-            if (Bound.IsCollisionBound(temp, width, height, direction))
-            {
-                IsMoving = false;
-            }
+            Point bulletPoint = NextLocation();
+            Utilities.HandleBulletCollision(this, bulletPoint);
             if (!IsMoving)
                 t.Stop();
             else
-                Loc = temp;
+                Loc = bulletPoint;
         }
 
         

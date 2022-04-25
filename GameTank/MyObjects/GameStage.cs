@@ -24,13 +24,15 @@ namespace GameTank.MyObjects
         {
             SampleEnemyTankStage = new List<EnemyTank>() {
                 new EnemyTank(new Point(30,30), isOfPlayer:  false, Color.Red),
-                new EnemyTank(new Point(740,30), isOfPlayer:  false, Color.Red),
-                new EnemyTank(new Point(600,500), isOfPlayer:  false, Color.Red),
-                new EnemyTank(new Point(30,400), isOfPlayer:  false, Color.Red)
+                new EnemyTank(new Point(100,30), isOfPlayer:  false, Color.Red),
+                new EnemyTank(new Point(400,30), isOfPlayer:  false, Color.Red),
+                new EnemyTank(new Point(600,30), isOfPlayer:  false, Color.Red)
             };
         }
+
         public static void State1()
         {
+            Bound.DrawBound();
             enemyPerTurn = 2;
             numberEnemy = 10;
             ObstaclesStage = new List<Obstacle>();

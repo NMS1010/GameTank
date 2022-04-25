@@ -10,6 +10,7 @@ namespace GameTank.MyObjects
 {
     internal class EnemyTank: Tank
     {
+        private bool lockMove = true;
         public EnemyTank(Point loc, bool isOfPlayer) : base(loc, isOfPlayer)
         {
 
@@ -18,6 +19,9 @@ namespace GameTank.MyObjects
         {
 
         }
+
+        public bool LockMove { get => lockMove; set => lockMove = value; }
+
         public override void DrawTank(Graphics grp)
         {
             base.DrawTank(grp);
