@@ -61,6 +61,7 @@
     <Compile Include="MyObjects\EnemySpawner.cs" />
     <Compile Include="MyObjects\EnemyTank.cs" />
     <Compile Include="MyObjects\GameStage.cs" />
+    <Compile Include="MyObjects\Item.cs" />
     <Compile Include="MyObjects\Obstacle.cs" />
     <Compile Include="MyObjects\PartialObstacle.cs" />
     <Compile Include="MyObjects\PlayerTank.cs" />
@@ -95,7 +96,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Image\againBtn.png" />
+    <Content Include="Image\enemyScore.bmp" />
+    <Content Include="Image\heart.png" />
+    <Content Include="Image\homeBtn.png" />
     <Content Include="Image\love.jpg" />
+    <Content Include="Image\nextBtn.png" />
+    <Content Include="Image\playertank.bmp" />
+    <Content Include="Image\spaceBackground.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

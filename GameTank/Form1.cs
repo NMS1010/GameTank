@@ -17,47 +17,54 @@ namespace GameTank
     {
         BufferedGraphics bufferedGraphics;
         BufferedGraphicsContext bufferedGraphicsContext;
-        Graphics grp;
         Timer renderTimer;
         Timer enemyFireTimer;
         Timer enemyMoveTimer;
         public Form1()
         {
             InitializeComponent();
-
+            
         }
 
         public void InitGraphics()
         {
             bufferedGraphicsContext = BufferedGraphicsManager.Current;
-            bufferedGraphicsContext.MaximumBuffer = new Size(Width, Height);    
+            bufferedGraphicsContext.MaximumBuffer = new Size(mainGamePnl.Width, mainGamePnl.Height);    
             bufferedGraphics = bufferedGraphicsContext.Allocate(mainGamePnl.CreateGraphics(), mainGamePnl.DisplayRectangle);
-            bufferedGraphics.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            grp = bufferedGraphics.Graphics;
+            
+        }
+        public void ClearGraphics()
+        {
+            bufferedGraphics.Graphics.Dispose();
+            bufferedGraphics.Dispose();
+            bufferedGraphicsContext.Invalidate();
         }
         private void Render()
         {
             if (GameStage.PlayerTank == null)
                 return;
+            //InitGraphics();
             bufferedGraphics.Graphics.Clear(Color.Black);
-
             playerTankDamageLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
             playerTankAttackSpeedLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
-            GameStage.PlayerTank.DrawTank(grp);
-            GameStage.PlayerTank.DrawBullets(grp);
+            GameStage.PlayerTank.DrawTank(bufferedGraphics.Graphics);
+            GameStage.PlayerTank.DrawBullets(bufferedGraphics.Graphics);
 
-            if (GameStage.numberEnemy == 0)
+            if (GameStage.NumberEnemy == 0)
             {
                 enemyMoveTimer.Stop();
+                enemyMoveTimer.Tick -= EnemyMoveTimer_Tick;
                 enemyFireTimer.Stop();
+                enemyFireTimer.Tick -= EnemyFireTimer_Tick;
 
                 GameStage.PlayerTank.Bullets.Clear();
-                GameStage.PlayerTank.DrawBullets(grp);
+                GameStage.PlayerTank.DrawBullets(bufferedGraphics.Graphics);
             }
             else
-                EnemySpawner.Spawn(grp);
+                EnemySpawner.Spawn(bufferedGraphics.Graphics);
 
             bufferedGraphics.Render();
+            //ClearGraphics();
         }
         private void mainGamePnl_Paint(object sender, PaintEventArgs e)
         {
@@ -130,6 +137,10 @@ namespace GameTank
             {
                 homePtrb.Image = new Bitmap(homeBtnImg);
             }
+            using (Image spaceBackgroundImg = Image.FromFile("../../Image/spaceBackground.jpg"))
+            {
+                modalPanel.BackgroundImage = new Bitmap(spaceBackgroundImg);
+            }
         }
         private void InitGame()
         {
@@ -139,7 +150,7 @@ namespace GameTank
             GameStage.MainGamePnl = this.mainGamePnl;
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
-
+            GameStage.CurrentNumberEnemyContainer = numberEnemyContainerPanel;
             GameStage.Stage1();
 
             SetTimer();
@@ -165,13 +176,15 @@ namespace GameTank
 
         private async void renderTimer_Tick(object sender, EventArgs e)
         {
-            Render();
-            if(GameStage.numberEnemy == 0)
+            if(GameStage.NumberEnemy == 0)
             {
-                await Task.Delay(2000);
-                modalPtrb.Visible = true;
-                (sender as Timer).Stop();
+                renderTimer.Stop();
+                renderTimer.Tick -= renderTimer_Tick;
+                await Task.Delay(1000);
+                modalPanel.Visible = true;
+                modalPanel.BringToFront();
             }
+            Render();
         }
 
         private void homePtrb_Click(object sender, EventArgs e)
@@ -184,8 +197,8 @@ namespace GameTank
             GameStage.ClearStage();
             GameStage.Stage2();
             await Task.Delay(1000);
-            modalPtrb.Visible = false;
-
+            modalPanel.Visible = false;
+            modalPanel.SendToBack();
             SetTimer();
         }
 

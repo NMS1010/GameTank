@@ -11,34 +11,70 @@ namespace GameTank.MyObjects
 {
     internal static class GameStage
     {
-        public static Panel MainGamePnl = null;
-        public static List<Obstacle> ObstaclesStage = null;
-        public static List<PartialObstacle> PartialObstacle = null;
-        public static List<EnemyTank> EnemyTanks = null;
-        public static List<EnemyTank> SampleEnemyTanks = null;
+        public static Panel MainGamePnl;
+
+        public static List<Obstacle> ObstaclesStage;
+        public static List<PartialObstacle> PartialObstacle;
+
+        public static List<EnemyTank> EnemyTanks;
+        public static List<Point> SpawEnemyPoint;
+
         public static PlayerTank PlayerTank;
+
         public static PictureBox TotalPlayerHealth;
         public static PictureBox CurrentPlayerHealth;
-        public static int enemyPerTurn;
-        public static int numberEnemy;
-        public static int CurrentState;
+        public static Panel CurrentNumberEnemyContainer;
 
+        public static int EnemyPerTurn;
+        public static int NumberEnemy;
+        public static int CurrentState = 1;
+        public static Bitmap avatarTank;
         static GameStage()
         {
-            SampleEnemyTanks = new List<EnemyTank>() {
-                new EnemyTank(loc: new Point(30,30), isOfPlayer: false, bulletColor: Color.Red, bulletSpeed: 100, bulletDamage: 20, health: 100),
-                new EnemyTank(loc: new Point(100,30), isOfPlayer: false, bulletColor: Color.Red, bulletSpeed: 100, bulletDamage: 20, health: 100),
-                new EnemyTank(loc: new Point(400,30), isOfPlayer: false, bulletColor: Color.Red, bulletSpeed: 100, bulletDamage: 20, health: 100),
-                new EnemyTank(loc: new Point(600,30), isOfPlayer: false, bulletColor: Color.Red, bulletSpeed: 100, bulletDamage: 20, health: 100)
+            SpawEnemyPoint = new List<Point>() {
+                new Point(30,30), 
+                new Point(100,30),
+                new Point(400,30),
+                new Point(600,30)
             };
+            using (Image tankImg = Image.FromFile("../../Image/enemyScore.bmp"))
+            {
+                avatarTank = new Bitmap(tankImg);
+            }
         }
+        private static void DisplayCurrentNumberEnemy()
+        {
+            int nRow = (int)Math.Ceiling(NumberEnemy / 4.0);
+            int nCol = 4;
 
+            PictureBox PrePtrb = new PictureBox() { Size = new Size(0, 0), Location = new Point(0, 0) };
+            PictureBox CurrPtrb;
+            for (int i = 0; i < nRow; i++)
+            {
+                for(int j = 0; j < nCol; j++)
+                {
+                    if (i * 4 + j >= NumberEnemy)
+                        return;
+                    CurrPtrb = new PictureBox()
+                    {
+                        Size = new Size(45, 45),
+                        Location = new Point(PrePtrb.Location.X + PrePtrb.Size.Width + 5, PrePtrb.Location.Y),
+                        SizeMode = PictureBoxSizeMode.StretchImage,
+                        Image = avatarTank
+                    };
+                    CurrentNumberEnemyContainer.Controls.Add(CurrPtrb);
+                    PrePtrb = CurrPtrb;
+                }
+                PrePtrb = new PictureBox() { Size = new Size(0, 0), Location = new Point(0, PrePtrb.Location.Y + 50) };
+            }
+        }
         public static void Stage1()
         {
             CurrentState = 1;
             Bound.DrawBound();
-            enemyPerTurn = 1;
-            numberEnemy = 1;
+            EnemyPerTurn = 1;
+            NumberEnemy = 1;
+            DisplayCurrentNumberEnemy();
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
             EnemyTanks = new List<EnemyTank>();
@@ -65,7 +101,6 @@ namespace GameTank.MyObjects
                 ObstaclesStage.Add(temp);
                 PartialObstacle.AddRange(temp.Obs);
             }
-            
             DrawStage(ObstaclesStage);
         }
 
@@ -73,9 +108,9 @@ namespace GameTank.MyObjects
         {
             CurrentState = 2;
             Bound.DrawBound();
-            enemyPerTurn = 2;
-            numberEnemy = 10;
-
+            EnemyPerTurn = 2;
+            NumberEnemy = 2;
+            DisplayCurrentNumberEnemy();
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
             EnemyTanks = new List<EnemyTank>();
@@ -103,12 +138,15 @@ namespace GameTank.MyObjects
                 ObstaclesStage.Add(temp);
                 PartialObstacle.AddRange(temp.Obs);
             }
-
             DrawStage(ObstaclesStage);
         }
         public static void ClearStage()
         {
             MainGamePnl.Controls.Clear();
+            CurrentNumberEnemyContainer.Controls.Clear();
+            PartialObstacle = null;
+            ObstaclesStage = null;
+            EnemyTanks = null;
         }
         public static void DrawStage(List<Obstacle> ObstaclesStage)
         {

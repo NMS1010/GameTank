@@ -76,12 +76,11 @@ namespace GameTank.MyObjects
                 t.Stop();
                 return;
             }  
-            Point bulletPoint = NextLocation();
-            Utilities.HandleBulletCollision(this, bulletPoint);
+            Utilities.HandleBulletCollision(this, Loc);
             if (!IsMoving)
                 t.Stop();
             else
-                Loc = bulletPoint;
+                Loc = NextLocation();
         }
 
         

@@ -45,11 +45,11 @@ namespace GameTank.MyObjects
             }
             else
             {
-                foreach (PartialObstacle obstacle in obstacles)
+                for (int i = 0; i < obstacles.Count; i++)
                 {
-                    if (obstacle.Ob.Bounds.IntersectsWith(new Rectangle(nextLoc, new Size(width, height))))
+                    if (obstacles[i].Ob.Bounds.IntersectsWith(new Rectangle(nextLoc, new Size(width, height))))
                     {
-                        return obstacle;
+                        return obstacles[i];
                     }
                 }
             }
@@ -119,11 +119,13 @@ namespace GameTank.MyObjects
                 EnemyTank enemyTank = IsCollisionEnemy(bullet.Loc, GameStage.EnemyTanks, bullet.Width, bullet.Height);
                 if (enemyTank != null)
                 {
-                    enemyTank.Health -= bullet.Damage;
+                    if(!EnemySpawner.IsLockDamage)
+                        enemyTank.Health -= bullet.Damage;
                     if (enemyTank.Health <= 0)
                     {
                         GameStage.EnemyTanks.Remove(enemyTank);
-                        GameStage.numberEnemy--;
+                        GameStage.NumberEnemy--;
+                        GameStage.CurrentNumberEnemyContainer.Controls.RemoveAt(GameStage.CurrentNumberEnemyContainer.Controls.Count - 1);
                     }
                     bullet.IsMoving = false;
                 }

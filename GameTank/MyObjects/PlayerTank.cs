@@ -12,7 +12,11 @@ namespace GameTank.MyObjects
     {
         public PlayerTank(Point loc, bool isOfPlayer, Color bulletColor, int bulletSpeed, int bulletDamage, int health) :base(loc, isOfPlayer, bulletColor, bulletSpeed, bulletDamage, health)
         {
-            
+            SrcFile = "../../Image/playertank.png";
+            using (Image imgTank = Image.FromFile(SrcFile))
+            {
+                TankAvatar = new Bitmap(imgTank);
+            }
         }
     }
 }

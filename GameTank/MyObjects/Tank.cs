@@ -20,6 +20,7 @@ namespace GameTank.MyObjects
         private int bulletSpeed;
 
         private Bitmap tankAvatar;
+        private string srcFile;
         private DIRECTION direction = 0;
         private List<Bullet> bullets = new List<Bullet>();
         private bool isOfPlayer;
@@ -35,15 +36,13 @@ namespace GameTank.MyObjects
         public int Health { get => health; set => health = value; }
         public int BulletSpeed { get => bulletSpeed; set => bulletSpeed = value; }
         public int BulletDamage { get => bulletDamage; set => bulletDamage = value; }
+        public Bitmap TankAvatar { get => tankAvatar; set => tankAvatar = value; }
+        public string SrcFile { get => srcFile; set => srcFile = value; }
 
         public Tank(Point loc, bool isOfPlayer, Color color, int bulletSpeed, int damage, int health)
         {
             IsOfPlayer = isOfPlayer;
             Loc = loc;
-            using (Image imgTank = Image.FromFile("../../Image/playertank.bmp"))
-            {
-                tankAvatar = new Bitmap(imgTank);
-            }
             bulletColor = color;
             BulletDamage = damage;
             BulletSpeed = bulletSpeed;
@@ -51,7 +50,7 @@ namespace GameTank.MyObjects
         }
         private void RotateTank()
         {
-            using (Image imgTank = Image.FromFile("../../Image/playertank.bmp"))
+            using (Image imgTank = Image.FromFile(SrcFile))
             {
                 using (Bitmap temp = new Bitmap(imgTank))
                 {
@@ -69,8 +68,8 @@ namespace GameTank.MyObjects
                             temp.RotateFlip(RotateFlipType.Rotate270FlipNone);
                             break;
                     }
-                    tankAvatar.Dispose();
-                    tankAvatar = new Bitmap(temp);
+                    TankAvatar.Dispose();
+                    TankAvatar = new Bitmap(temp);
                 }
             }
         }
@@ -105,7 +104,7 @@ namespace GameTank.MyObjects
         }
         public virtual void DrawTank(Graphics grp)
         {
-            grp.DrawImage(tankAvatar, new Rectangle(Loc.X, Loc.Y, Width, Height));
+            grp.DrawImage(TankAvatar, new Rectangle(Loc.X, Loc.Y, Width, Height));
         }
 
         public void Fire()

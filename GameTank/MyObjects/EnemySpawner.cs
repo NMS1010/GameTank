@@ -5,34 +5,69 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using GameTank.Constants;
 
 namespace GameTank.MyObjects
 {
-    internal class EnemySpawner
+    internal static class EnemySpawner
     {
         public static int EnemyPerTurn;
         private static int count = 0;
+        public static bool IsLockDamage = true;
+        public static List<PictureBox> spawnLocation = new List<PictureBox>();
+        public static Bitmap portal;
+
+        static EnemySpawner()
+        {
+            using (Image portalImg = Image.FromFile("../../Image/portal.png"))
+            {
+                portal = new Bitmap(portalImg);
+            }
+        }
+        private static bool CheckHaveEnemy(Point p)
+        {
+            foreach(EnemyTank e in GameStage.EnemyTanks)
+            {
+                if (e.Loc.X == p.X && e.Loc.Y == p.Y)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public static void Spawn(Graphics grp)
         {
-            EnemyPerTurn = GameStage.enemyPerTurn;
-
+            EnemyPerTurn = GameStage.EnemyPerTurn;
             bool isSpawn = false;
-            HashSet<int> numbers = Utilities.RandomNotDup(EnemyPerTurn, 0, GameStage.SampleEnemyTanks.Count - 1);
-            foreach (int i in numbers)
+            if (GameStage.EnemyTanks.Count < EnemyPerTurn)
             {
-                if (GameStage.EnemyTanks.Count < EnemyPerTurn && !GameStage.EnemyTanks.Contains(GameStage.SampleEnemyTanks[i])
-                    && GameStage.numberEnemy >= GameStage.enemyPerTurn)
+                HashSet<int> numbers = Utilities.RandomNotDup(EnemyPerTurn, 0, GameStage.SpawEnemyPoint.Count - 1);
+                foreach (int i in numbers)
                 {
-                    GameStage.SampleEnemyTanks[i].Health = 100;
-                    GameStage.SampleEnemyTanks[i].LockMove = true;
-                    GameStage.EnemyTanks.Add(GameStage.SampleEnemyTanks[i]);
-                    isSpawn = true;
+                    if (GameStage.EnemyTanks.Count < EnemyPerTurn && !CheckHaveEnemy(GameStage.SpawEnemyPoint[i])
+                        && GameStage.NumberEnemy >= GameStage.EnemyPerTurn)
+                    {
+                        IsLockDamage = true;
+                        EnemyTank t = new EnemyTank(loc: GameStage.SpawEnemyPoint[i], isOfPlayer: false, bulletColor: Color.Red,
+                            bulletSpeed: 100, bulletDamage: 20, health: (int)TANK.ENEMY_HEALTH * GameStage.CurrentState);
+                        t.LockMove = true;
+                        GameStage.EnemyTanks.Add(t);
+                        spawnLocation.Add(new PictureBox() { Location = t.Loc, Width = t.Width, Height = t.Height, Image = portal, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Black });
+                        isSpawn = true;
+                    }
                 }
             }
             GameStage.EnemyTanks.ForEach(o =>
             {
-                o.DrawTank(grp);
-                o.DrawBullets(grp);
+                if (o.LockMove)
+                {
+                    GameStage.MainGamePnl.Controls.AddRange(spawnLocation.ToArray());
+                }
+                else
+                {
+                    o.DrawTank(grp);
+                    o.DrawBullets(grp);
+                }
             });
             if (isSpawn)
             {
@@ -46,13 +81,21 @@ namespace GameTank.MyObjects
         private static void T_Tick(object sender, EventArgs e)
         {
             count++;
-            if(count == 10)
+            if (count == 15)
             {
-                GameStage.EnemyTanks.ForEach(o => {
+                IsLockDamage = false;
+                GameStage.EnemyTanks.ForEach(o =>
+                {
                     if (o.LockMove)
                         o.LockMove = false;
                 });
+                spawnLocation.ForEach(p => {
+                    GameStage.MainGamePnl.Controls.Remove(p);
+                });
                 (sender as Timer).Stop();
+            }
+            else
+            {
             }
         }
     }
