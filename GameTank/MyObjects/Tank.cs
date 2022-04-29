@@ -96,7 +96,8 @@ namespace GameTank.MyObjects
                 NextLoc = new Point(Loc.X + speed, Loc.Y);
                 Direction = DIRECTION.RIGHT;
             }
-            if (Utilities.IsCollisionObstacle(NextLoc, Width, Height, Direction) == null && !Bound.IsCollisionBound(NextLoc, Width, Height, Direction))
+            if (Utilities.IsCollisionObstacle(NextLoc, Width, Height, Direction) == null && !Bound.IsCollisionBound(NextLoc, Width, Height, Direction) &&
+                !Utilities.IsCollisionTank(NextLoc, this))
             {
                 Loc = NextLoc;
             }

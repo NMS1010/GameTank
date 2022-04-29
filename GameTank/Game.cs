@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace GameTank
 {
-    public partial class Form1 : Form
+    public partial class Game : Form
     {
         BufferedGraphics bufferedGraphics;
         BufferedGraphicsContext bufferedGraphicsContext;
         Timer renderTimer;
         Timer enemyFireTimer;
         Timer enemyMoveTimer;
-        public Form1()
+        public Game()
         {
             InitializeComponent();
             
@@ -57,8 +57,8 @@ namespace GameTank
                 enemyFireTimer.Stop();
                 enemyFireTimer.Tick -= EnemyFireTimer_Tick;
 
-                GameStage.PlayerTank.Bullets.Clear();
-                GameStage.PlayerTank.DrawBullets(bufferedGraphics.Graphics);
+                //GameStage.PlayerTank.Bullets.Clear();
+                //GameStage.PlayerTank.DrawBullets(bufferedGraphics.Graphics);
             }
             else
                 EnemySpawner.Spawn(bufferedGraphics.Graphics);
@@ -125,21 +125,21 @@ namespace GameTank
             {
                 heartPtrb.Image = new Bitmap(heartImg);
             }
-            using (Image nextBtnImg = Image.FromFile("../../Image/nextBtn.png"))
+            using (Image nextBtnImg = Image.FromFile("../../Image/nextBtn.jpg"))
             {
                 nextStagePtrb.Image = new Bitmap(nextBtnImg);
             }
-            using (Image againBtnImg = Image.FromFile("../../Image/againBtn.png"))
+            using (Image againBtnImg = Image.FromFile("../../Image/replayBtn.jpg"))
             {
                 againPtrb.Image = new Bitmap(againBtnImg);
             }
-            using (Image homeBtnImg = Image.FromFile("../../Image/homeBtn.png"))
+            using (Image homeBtnImg = Image.FromFile("../../Image/homeBtn.jpg"))
             {
                 homePtrb.Image = new Bitmap(homeBtnImg);
             }
-            using (Image spaceBackgroundImg = Image.FromFile("../../Image/spaceBackground.jpg"))
+            using (Image cupImg = Image.FromFile("../../Image/cup.png"))
             {
-                modalPanel.BackgroundImage = new Bitmap(spaceBackgroundImg);
+                cupPtrb.Image = new Bitmap(cupImg);
             }
         }
         private void InitGame()
@@ -176,15 +176,15 @@ namespace GameTank
 
         private async void renderTimer_Tick(object sender, EventArgs e)
         {
-            if(GameStage.NumberEnemy == 0)
+            Render();
+            if (GameStage.NumberEnemy == 0)
             {
+                //await Task.Delay(4000);
                 renderTimer.Stop();
                 renderTimer.Tick -= renderTimer_Tick;
-                await Task.Delay(1000);
                 modalPanel.Visible = true;
                 modalPanel.BringToFront();
             }
-            Render();
         }
 
         private void homePtrb_Click(object sender, EventArgs e)
@@ -196,9 +196,9 @@ namespace GameTank
         {
             GameStage.ClearStage();
             GameStage.Stage2();
-            await Task.Delay(1000);
-            modalPanel.Visible = false;
+            await Task.Delay(2000);
             modalPanel.SendToBack();
+            modalPanel.Visible = false;
             SetTimer();
         }
 

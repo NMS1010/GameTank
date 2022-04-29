@@ -144,9 +144,12 @@ namespace GameTank.MyObjects
         {
             MainGamePnl.Controls.Clear();
             CurrentNumberEnemyContainer.Controls.Clear();
+            EnemySpawner.spawnLocation.Clear();
+            PlayerTank.Bullets.Clear();
             PartialObstacle = null;
             ObstaclesStage = null;
             EnemyTanks = null;
+            
         }
         public static void DrawStage(List<Obstacle> ObstaclesStage)
         {

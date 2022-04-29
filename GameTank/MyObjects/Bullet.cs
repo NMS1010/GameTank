@@ -21,7 +21,7 @@ namespace GameTank.MyObjects
         private bool isMoving = false;
         private Color bulletColor;
         Timer t;
-
+        PictureBox explodePtrb;
         public Bullet(Point loc, DIRECTION direction, bool isOfPlayer, Color color, int bulletSpeed, int damage)
         {
             Loc = loc;
@@ -32,6 +32,11 @@ namespace GameTank.MyObjects
             t = new Timer();
             t.Tick += T_Tick;
             t.Interval = bulletSpeed;
+            explodePtrb = new PictureBox() {Width = 40, Height = 40, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Transparent };
+            using (Image explodeImg = Image.FromFile("../../Image/explode.png"))
+            {
+                explodePtrb.Image = new Bitmap(explodeImg);
+            }
         }
         public Color BulletColor { get => bulletColor; set => bulletColor = value; }
         public Point Loc { get => loc; set => loc = value; }
@@ -71,7 +76,8 @@ namespace GameTank.MyObjects
 
         private void T_Tick(object sender, EventArgs e)
         {
-            if(GameStage.PlayerTank == null)
+            Point temp = NextLocation();
+            if (GameStage.PlayerTank == null)
             {
                 t.Stop();
                 return;
@@ -80,13 +86,28 @@ namespace GameTank.MyObjects
             if (!IsMoving)
                 t.Stop();
             else
-                Loc = NextLocation();
+                Loc = temp;
         }
 
         
         public void DrawBullet(Graphics grp)
         {
             grp.FillEllipse(new SolidBrush(BulletColor), new Rectangle(Loc, new Size(Width, Height)));
+        }
+
+        public void ShowExplode(Point p)
+        {
+            explodePtrb.Location = p;
+            GameStage.MainGamePnl.Controls.Add(explodePtrb);
+            explodePtrb.SendToBack();
+        }
+
+        public void RemoveExplode()
+        {
+            if (GameStage.MainGamePnl.Controls.Contains(explodePtrb))
+            {
+                GameStage.MainGamePnl.Controls.Remove(explodePtrb);
+            }
         }
     }
 }
