@@ -49,7 +49,7 @@ namespace GameTank.MyObjects
                     {
                         IsLockDamage = true;
                         EnemyTank t = new EnemyTank(loc: GameStage.SpawEnemyPoint[i], isOfPlayer: false, bulletColor: Color.Red,
-                            bulletSpeed: 100, bulletDamage: 20, health: (int)TANK.ENEMY_HEALTH * GameStage.CurrentState);
+                            bulletSpeed: 100 - 10 * GameStage.CurrentState, bulletDamage: 20 * GameStage.CurrentState, health: (int)TANK.ENEMY_HEALTH * GameStage.CurrentState);
                         t.LockMove = true;
                         GameStage.EnemyTanks.Add(t);
                         spawnLocation.Add(new PictureBox() { Location = t.Loc, Width = t.Width, Height = t.Height, Image = portal, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Black });

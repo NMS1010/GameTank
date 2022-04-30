@@ -11,12 +11,12 @@ namespace GameTank.MyObjects
 {
     internal static class Utilities
     {
-        static Timer t;
+        static Timer explodeTimer;
 
         static Utilities()
         {
-            t = new Timer();
-            t.Interval = 1000;
+            explodeTimer = new Timer();
+            explodeTimer.Interval = 500;
         }
         public static Tuple<Point, Point> GetAheadPoints(Point nextLoc, int width, int height, DIRECTION direction)
         {
@@ -162,8 +162,8 @@ namespace GameTank.MyObjects
             if (ob != null)
             {
                 bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
-                t.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
-                t.Start();
+                explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
+                explodeTimer.Start();
                 if (ob.IsCanDestroy)
                 {
                     ob.Health -= bullet.Damage;
@@ -181,8 +181,8 @@ namespace GameTank.MyObjects
                 if (enemyTank != null)
                 {
                     bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
-                    t.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
-                    t.Start();
+                    explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
+                    explodeTimer.Start();
                     if (!EnemySpawner.IsLockDamage)
                         enemyTank.Health -= bullet.Damage;
                     if (enemyTank.Health <= 0)
@@ -199,8 +199,8 @@ namespace GameTank.MyObjects
                 if (CheckHitTank(GameStage.PlayerTank, bullet.Loc, bullet.Width, bullet.Height))
                 {
                     bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
-                    t.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
-                    t.Start();
+                    explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
+                    explodeTimer.Start();
                     GameStage.PlayerTank.Health -= bullet.Damage;
                     GameStage.CurrentPlayerHealth.Width = (GameStage.PlayerTank.Health * GameStage.TotalPlayerHealth.Width) / (int)TANK.PLAYER_HEALTH;
                     if (GameStage.PlayerTank.Health <= 0)
@@ -214,8 +214,8 @@ namespace GameTank.MyObjects
             if (Bound.IsCollisionBound(bulletPoint, bullet.Width, bullet.Height, bullet.Direction))
             {
                 bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
-                t.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
-                t.Start();
+                explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
+                explodeTimer.Start();
                 bullet.IsMoving = false;
             }
         }
