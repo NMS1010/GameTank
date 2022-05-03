@@ -30,15 +30,15 @@
         {
             this.mainGamePnl = new System.Windows.Forms.Panel();
             this.modalPanel = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.scoreTurnLabel = new System.Windows.Forms.Label();
+            this.timeTurnScoreLabel = new System.Windows.Forms.Label();
             this.cupPtrb = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.againPtrb = new System.Windows.Forms.PictureBox();
             this.nextStagePtrb = new System.Windows.Forms.PictureBox();
             this.homePtrb = new System.Windows.Forms.PictureBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.totalTimeLabel = new System.Windows.Forms.Label();
+            this.totalScoreLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,6 +52,9 @@
             this.numberEnemyContainerPanel = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.barPtrb = new System.Windows.Forms.PictureBox();
+            this.stageLabel = new System.Windows.Forms.Label();
+            this.countDownLabel = new System.Windows.Forms.Label();
+            this.exitPtrb = new System.Windows.Forms.PictureBox();
             this.modalPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cupPtrb)).BeginInit();
             this.panel1.SuspendLayout();
@@ -63,6 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.totalHealthPtrb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heartPtrb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barPtrb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitPtrb)).BeginInit();
             this.SuspendLayout();
             // 
             // mainGamePnl
@@ -77,12 +81,12 @@
             // modalPanel
             // 
             this.modalPanel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.modalPanel.Controls.Add(this.label6);
-            this.modalPanel.Controls.Add(this.label7);
+            this.modalPanel.Controls.Add(this.scoreTurnLabel);
+            this.modalPanel.Controls.Add(this.timeTurnScoreLabel);
             this.modalPanel.Controls.Add(this.cupPtrb);
             this.modalPanel.Controls.Add(this.panel1);
-            this.modalPanel.Controls.Add(this.label8);
-            this.modalPanel.Controls.Add(this.label5);
+            this.modalPanel.Controls.Add(this.totalTimeLabel);
+            this.modalPanel.Controls.Add(this.totalScoreLabel);
             this.modalPanel.Controls.Add(this.label3);
             this.modalPanel.Location = new System.Drawing.Point(16, 66);
             this.modalPanel.Name = "modalPanel";
@@ -90,29 +94,29 @@
             this.modalPanel.TabIndex = 1;
             this.modalPanel.Visible = false;
             // 
-            // label6
+            // scoreTurnLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Monotype Corsiva", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.label6.Location = new System.Drawing.Point(144, 334);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(201, 45);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Score in turn";
+            this.scoreTurnLabel.AutoSize = true;
+            this.scoreTurnLabel.BackColor = System.Drawing.Color.Transparent;
+            this.scoreTurnLabel.Font = new System.Drawing.Font("Monotype Corsiva", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scoreTurnLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.scoreTurnLabel.Location = new System.Drawing.Point(144, 334);
+            this.scoreTurnLabel.Name = "scoreTurnLabel";
+            this.scoreTurnLabel.Size = new System.Drawing.Size(201, 45);
+            this.scoreTurnLabel.TabIndex = 15;
+            this.scoreTurnLabel.Text = "Score in turn";
             // 
-            // label7
+            // timeTurnScoreLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Monotype Corsiva", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.label7.Location = new System.Drawing.Point(506, 334);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(195, 45);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Time in turn";
+            this.timeTurnScoreLabel.AutoSize = true;
+            this.timeTurnScoreLabel.BackColor = System.Drawing.Color.Transparent;
+            this.timeTurnScoreLabel.Font = new System.Drawing.Font("Monotype Corsiva", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timeTurnScoreLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.timeTurnScoreLabel.Location = new System.Drawing.Point(506, 334);
+            this.timeTurnScoreLabel.Name = "timeTurnScoreLabel";
+            this.timeTurnScoreLabel.Size = new System.Drawing.Size(195, 45);
+            this.timeTurnScoreLabel.TabIndex = 16;
+            this.timeTurnScoreLabel.Text = "Time in turn";
             // 
             // cupPtrb
             // 
@@ -164,29 +168,29 @@
             this.homePtrb.TabStop = false;
             this.homePtrb.Click += new System.EventHandler(this.homePtrb_Click);
             // 
-            // label8
+            // totalTimeLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("MV Boli", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.BurlyWood;
-            this.label8.Location = new System.Drawing.Point(62, 526);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(224, 49);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Total Time";
+            this.totalTimeLabel.AutoSize = true;
+            this.totalTimeLabel.BackColor = System.Drawing.Color.Transparent;
+            this.totalTimeLabel.Font = new System.Drawing.Font("MV Boli", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalTimeLabel.ForeColor = System.Drawing.Color.BurlyWood;
+            this.totalTimeLabel.Location = new System.Drawing.Point(35, 524);
+            this.totalTimeLabel.Name = "totalTimeLabel";
+            this.totalTimeLabel.Size = new System.Drawing.Size(224, 49);
+            this.totalTimeLabel.TabIndex = 17;
+            this.totalTimeLabel.Text = "Total Time";
             // 
-            // label5
+            // totalScoreLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("MV Boli", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.BurlyWood;
-            this.label5.Location = new System.Drawing.Point(62, 455);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(235, 49);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Total Score";
+            this.totalScoreLabel.AutoSize = true;
+            this.totalScoreLabel.BackColor = System.Drawing.Color.Transparent;
+            this.totalScoreLabel.Font = new System.Drawing.Font("MV Boli", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalScoreLabel.ForeColor = System.Drawing.Color.BurlyWood;
+            this.totalScoreLabel.Location = new System.Drawing.Point(35, 453);
+            this.totalScoreLabel.Name = "totalScoreLabel";
+            this.totalScoreLabel.Size = new System.Drawing.Size(235, 49);
+            this.totalScoreLabel.TabIndex = 14;
+            this.totalScoreLabel.Text = "Total Score";
             // 
             // label3
             // 
@@ -322,11 +326,43 @@
             // barPtrb
             // 
             this.barPtrb.BackColor = System.Drawing.Color.Fuchsia;
-            this.barPtrb.Location = new System.Drawing.Point(13, 13);
+            this.barPtrb.Location = new System.Drawing.Point(16, 13);
             this.barPtrb.Name = "barPtrb";
-            this.barPtrb.Size = new System.Drawing.Size(802, 47);
+            this.barPtrb.Size = new System.Drawing.Size(799, 47);
             this.barPtrb.TabIndex = 15;
             this.barPtrb.TabStop = false;
+            // 
+            // stageLabel
+            // 
+            this.stageLabel.AutoSize = true;
+            this.stageLabel.BackColor = System.Drawing.Color.Fuchsia;
+            this.stageLabel.Font = new System.Drawing.Font("MS PGothic", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stageLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.stageLabel.Location = new System.Drawing.Point(22, 14);
+            this.stageLabel.Name = "stageLabel";
+            this.stageLabel.Size = new System.Drawing.Size(135, 37);
+            this.stageLabel.TabIndex = 16;
+            this.stageLabel.Text = "STAGE";
+            // 
+            // countDownLabel
+            // 
+            this.countDownLabel.AutoSize = true;
+            this.countDownLabel.BackColor = System.Drawing.Color.Fuchsia;
+            this.countDownLabel.Font = new System.Drawing.Font("MS PGothic", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.countDownLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.countDownLabel.Location = new System.Drawing.Point(307, 14);
+            this.countDownLabel.Name = "countDownLabel";
+            this.countDownLabel.Size = new System.Drawing.Size(0, 37);
+            this.countDownLabel.TabIndex = 17;
+            // 
+            // exitPtrb
+            // 
+            this.exitPtrb.BackColor = System.Drawing.Color.Fuchsia;
+            this.exitPtrb.Location = new System.Drawing.Point(763, 14);
+            this.exitPtrb.Name = "exitPtrb";
+            this.exitPtrb.Size = new System.Drawing.Size(45, 45);
+            this.exitPtrb.TabIndex = 18;
+            this.exitPtrb.TabStop = false;
             // 
             // Game
             // 
@@ -334,6 +370,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1099, 699);
+            this.Controls.Add(this.exitPtrb);
+            this.Controls.Add(this.countDownLabel);
+            this.Controls.Add(this.stageLabel);
             this.Controls.Add(this.modalPanel);
             this.Controls.Add(this.barPtrb);
             this.Controls.Add(this.label9);
@@ -365,6 +404,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.totalHealthPtrb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heartPtrb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barPtrb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitPtrb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,16 +426,19 @@
         private System.Windows.Forms.PictureBox againPtrb;
         private System.Windows.Forms.PictureBox nextStagePtrb;
         private System.Windows.Forms.PictureBox homePtrb;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label totalTimeLabel;
+        private System.Windows.Forms.Label timeTurnScoreLabel;
+        private System.Windows.Forms.Label scoreTurnLabel;
+        private System.Windows.Forms.Label totalScoreLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox heartPtrb;
         private System.Windows.Forms.Panel numberEnemyContainerPanel;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.PictureBox barPtrb;
         private System.Windows.Forms.PictureBox cupPtrb;
+        private System.Windows.Forms.Label stageLabel;
+        private System.Windows.Forms.Label countDownLabel;
+        private System.Windows.Forms.PictureBox exitPtrb;
     }
 }
 

@@ -45,6 +45,7 @@
             this.playBtn.TabIndex = 0;
             this.playBtn.Text = "New Game";
             this.playBtn.UseVisualStyleBackColor = false;
+            this.playBtn.Click += new System.EventHandler(this.playBtn_Click);
             // 
             // aboutBtn
             // 
@@ -56,6 +57,7 @@
             this.aboutBtn.TabIndex = 1;
             this.aboutBtn.Text = "About";
             this.aboutBtn.UseVisualStyleBackColor = false;
+            this.aboutBtn.Click += new System.EventHandler(this.aboutBtn_Click);
             // 
             // quitBtn
             // 
@@ -67,6 +69,7 @@
             this.quitBtn.TabIndex = 2;
             this.quitBtn.Text = "Quit";
             this.quitBtn.UseVisualStyleBackColor = false;
+            this.quitBtn.Click += new System.EventHandler(this.quitBtn_Click);
             // 
             // label1
             // 

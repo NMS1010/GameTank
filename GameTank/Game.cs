@@ -20,6 +20,9 @@ namespace GameTank
         Timer renderTimer;
         Timer enemyFireTimer;
         Timer enemyMoveTimer;
+        Timer countDownTimer;
+        int m, s, h;
+
         public Game()
         {
             InitializeComponent();
@@ -31,7 +34,7 @@ namespace GameTank
             bufferedGraphicsContext = BufferedGraphicsManager.Current;
             bufferedGraphicsContext.MaximumBuffer = new Size(mainGamePnl.Width, mainGamePnl.Height);    
             bufferedGraphics = bufferedGraphicsContext.Allocate(mainGamePnl.CreateGraphics(), mainGamePnl.DisplayRectangle);
-            
+            bufferedGraphics.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         }
         public void ClearGraphics()
         {
@@ -114,9 +117,36 @@ namespace GameTank
             enemyMoveTimer = new Timer();
             enemyMoveTimer.Tick += EnemyMoveTimer_Tick;
 
+            countDownTimer = new Timer();
+            m = 0;
+            s = 0;
+            h = 0;
+            countDownTimer.Tick += CountDownTimer_Tick;
+            countDownTimer.Interval = 1000;
+
             enemyFireTimer.Start();
             enemyMoveTimer.Start();
             renderTimer.Start();
+            countDownTimer.Start();
+        }
+
+        private void CountDownTimer_Tick(object sender, EventArgs e)
+        {
+            Invoke(new Action(() =>
+            {
+                s++;
+                if(s == 60)
+                {
+                    s = 0;
+                    m++;
+                }
+                if( m == 60)
+                {
+                    m = 0;
+                    h++;
+                }
+                countDownLabel.Text = String.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
+            }));
         }
 
         private void SetImage()
@@ -141,17 +171,23 @@ namespace GameTank
             {
                 cupPtrb.Image = new Bitmap(cupImg);
             }
+            using (Image exitImg = Image.FromFile("../../Image/exitBtn.png"))
+            {
+                exitPtrb.Image = new Bitmap(exitImg);
+            }
         }
         private void InitGame()
         {
             SetImage();
-            PlayerTank playerTank = new PlayerTank(loc: new Point(400, 400), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: 100, bulletDamage: 20, health: 1000);
+            PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: 100, bulletDamage: 20, health: 1000);
             GameStage.PlayerTank = playerTank;
             GameStage.MainGamePnl = this.mainGamePnl;
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
             GameStage.CurrentNumberEnemyContainer = numberEnemyContainerPanel;
-            GameStage.Stage1();
+            GameStage.CurrentState++;
+            GameStage.NextState();
+            stageLabel.Text = "STAGE " + GameStage.CurrentState.ToString();
 
             SetTimer();
         }
@@ -174,13 +210,20 @@ namespace GameTank
             Render();
         }
 
-        private async void renderTimer_Tick(object sender, EventArgs e)
+        private void renderTimer_Tick(object sender, EventArgs e)
         {
             Render();
             if (GameStage.NumberEnemy == 0)
             {
-                //await Task.Delay(4000);
+                countDownTimer.Stop();
+                timeTurnScoreLabel.Text = (h * 60 + m * 60 + s).ToString() + "s";
+                scoreTurnLabel.Text = ((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10).ToString();
+                GameStage.TotalTime.Add(h * 60 + m * 60 + s);
+                GameStage.TotalScore.Add((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10);
+                totalScoreLabel.Text = GameStage.TotalScore.Sum().ToString();
+                totalTimeLabel.Text = GameStage.TotalTime.Sum().ToString() + "s";
                 renderTimer.Stop();
+                
                 renderTimer.Tick -= renderTimer_Tick;
                 modalPanel.Visible = true;
                 modalPanel.BringToFront();
@@ -189,22 +232,39 @@ namespace GameTank
 
         private void homePtrb_Click(object sender, EventArgs e)
         {
-
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn về màn hình chính ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Close();
+                Dispose();
+            }
+            
         }
 
         private async void nextStagePtrb_Click(object sender, EventArgs e)
         {
             GameStage.ClearStage();
-            GameStage.Stage2();
+            GameStage.CurrentState++;
+            if(GameStage.CurrentState > GameStage.MaxState)
+            {
+                GameStage.CurrentState = GameStage.MaxState;
+            }
+            GameStage.NextState();
+            stageLabel.Text = "STAGE " + GameStage.CurrentState.ToString();
             await Task.Delay(2000);
             modalPanel.SendToBack();
             modalPanel.Visible = false;
             SetTimer();
         }
 
-        private void againPtrb_Click(object sender, EventArgs e)
+        private async void againPtrb_Click(object sender, EventArgs e)
         {
-
+            GameStage.ClearStage();
+            GameStage.NextState();
+            await Task.Delay(2000);
+            modalPanel.SendToBack();
+            modalPanel.Visible = false;
+            SetTimer();
         }
     }
 }

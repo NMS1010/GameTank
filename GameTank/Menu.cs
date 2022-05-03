@@ -16,5 +16,22 @@ namespace GameTank
         {
             InitializeComponent();
         }
+
+        private void playBtn_Click(object sender, EventArgs e)
+        {
+            Game game = new Game();
+            Hide();
+            game.ShowDialog();
+        }
+
+        private void aboutBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void quitBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
