@@ -12,9 +12,9 @@ namespace GameTank.MyObjects
     {
         private bool lockMove = true;
 
-        public EnemyTank(Point loc, bool isOfPlayer, Color bulletColor, int bulletSpeed, int bulletDamage, int health) : base(loc, isOfPlayer, bulletColor, bulletSpeed, bulletDamage, health)
+        public EnemyTank(Point loc, bool isOfPlayer, Color bulletColor, int bulletSpeed, int bulletDamage, int health, string srcFile) : base(loc, isOfPlayer, bulletColor, bulletSpeed, bulletDamage, health)
         {
-            SrcFile = "../../Image/enemy.bmp";
+            SrcFile = srcFile;
             using (Image imgTank = Image.FromFile(SrcFile))
             {
                 TankAvatar = new Bitmap(imgTank);
