@@ -39,7 +39,7 @@
             this.homePtrb = new System.Windows.Forms.PictureBox();
             this.totalTimeLabel = new System.Windows.Forms.Label();
             this.totalScoreLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.statusLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.playerTankDamageLabel = new System.Windows.Forms.Label();
@@ -87,7 +87,7 @@
             this.modalPanel.Controls.Add(this.panel1);
             this.modalPanel.Controls.Add(this.totalTimeLabel);
             this.modalPanel.Controls.Add(this.totalScoreLabel);
-            this.modalPanel.Controls.Add(this.label3);
+            this.modalPanel.Controls.Add(this.statusLabel);
             this.modalPanel.Location = new System.Drawing.Point(16, 66);
             this.modalPanel.Name = "modalPanel";
             this.modalPanel.Size = new System.Drawing.Size(799, 621);
@@ -192,17 +192,17 @@
             this.totalScoreLabel.TabIndex = 14;
             this.totalScoreLabel.Text = "Total Score";
             // 
-            // label3
+            // statusLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("MV Boli", 48F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(248, 15);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(333, 85);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "YOU WIN";
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.statusLabel.Font = new System.Drawing.Font("MV Boli", 48F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel.ForeColor = System.Drawing.Color.Red;
+            this.statusLabel.Location = new System.Drawing.Point(248, 15);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(333, 85);
+            this.statusLabel.TabIndex = 13;
+            this.statusLabel.Text = "YOU WIN";
             // 
             // pictureBox1
             // 
@@ -358,17 +358,20 @@
             // exitPtrb
             // 
             this.exitPtrb.BackColor = System.Drawing.Color.Fuchsia;
+            this.exitPtrb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.exitPtrb.Location = new System.Drawing.Point(763, 14);
             this.exitPtrb.Name = "exitPtrb";
             this.exitPtrb.Size = new System.Drawing.Size(45, 45);
+            this.exitPtrb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.exitPtrb.TabIndex = 18;
             this.exitPtrb.TabStop = false;
+            this.exitPtrb.Click += new System.EventHandler(this.exitPtrb_Click);
             // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(1099, 699);
             this.Controls.Add(this.exitPtrb);
             this.Controls.Add(this.countDownLabel);
@@ -430,7 +433,7 @@
         private System.Windows.Forms.Label timeTurnScoreLabel;
         private System.Windows.Forms.Label scoreTurnLabel;
         private System.Windows.Forms.Label totalScoreLabel;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.PictureBox heartPtrb;
         private System.Windows.Forms.Panel numberEnemyContainerPanel;
         private System.Windows.Forms.Label label9;

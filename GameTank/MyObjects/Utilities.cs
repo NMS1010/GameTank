@@ -69,6 +69,8 @@ namespace GameTank.MyObjects
 
         public static bool CheckCollisionTank(Point nextLoc, List<EnemyTank> enemyTanks, Tank tank)
         {
+            if (GameStage.PlayerTank == null)
+                return false;
             foreach(EnemyTank e in enemyTanks) { 
                 if (e != tank && (new Rectangle(nextLoc, new Size(tank.Width, tank.Height))).IntersectsWith(new Rectangle(e.Loc, new Size(e.Width, e.Height))))
                 {
@@ -121,6 +123,7 @@ namespace GameTank.MyObjects
         }
         public static int ChooseEnemyDirection(EnemyTank e)
         {
+            
             if (IsCollisionObstacle(e.NextLoc, e.Width, e.Height, e.Direction) == null
                 && !Bound.IsCollisionBound(e.NextLoc, e.Width, e.Height, e.Direction)
                 && !IsCollisionTank(e.NextLoc, e))
@@ -206,7 +209,6 @@ namespace GameTank.MyObjects
                     if (GameStage.PlayerTank.Health <= 0)
                     {
                         GameStage.PlayerTank = null;
-                        MessageBox.Show("Lose");
                     }
                     bullet.IsMoving = false;
                 }

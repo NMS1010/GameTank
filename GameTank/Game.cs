@@ -45,8 +45,13 @@ namespace GameTank
         private void Render()
         {
             if (GameStage.PlayerTank == null)
+            {
+                enemyMoveTimer.Stop();
+                enemyMoveTimer.Tick -= EnemyMoveTimer_Tick;
+                enemyFireTimer.Stop();
+                enemyFireTimer.Tick -= EnemyFireTimer_Tick;
                 return;
-            //InitGraphics();
+            }
             bufferedGraphics.Graphics.Clear(Color.Black);
             playerTankDamageLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
             playerTankAttackSpeedLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
@@ -60,14 +65,14 @@ namespace GameTank
                 enemyFireTimer.Stop();
                 enemyFireTimer.Tick -= EnemyFireTimer_Tick;
 
-                //GameStage.PlayerTank.Bullets.Clear();
-                //GameStage.PlayerTank.DrawBullets(bufferedGraphics.Graphics);
             }
             else
                 EnemySpawner.Spawn(bufferedGraphics.Graphics);
-
-            bufferedGraphics.Render();
-            //ClearGraphics();
+            try
+            {
+                bufferedGraphics.Render();
+            }
+            catch { }
         }
         private void mainGamePnl_Paint(object sender, PaintEventArgs e)
         {
@@ -167,10 +172,6 @@ namespace GameTank
             {
                 homePtrb.Image = new Bitmap(homeBtnImg);
             }
-            using (Image cupImg = Image.FromFile("../../Image/cup.png"))
-            {
-                cupPtrb.Image = new Bitmap(cupImg);
-            }
             using (Image exitImg = Image.FromFile("../../Image/exitBtn.png"))
             {
                 exitPtrb.Image = new Bitmap(exitImg);
@@ -179,12 +180,11 @@ namespace GameTank
         private void InitGame()
         {
             SetImage();
-            PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: 100, bulletDamage: 20, health: 1000);
-            GameStage.PlayerTank = playerTank;
             GameStage.MainGamePnl = this.mainGamePnl;
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
             GameStage.CurrentNumberEnemyContainer = numberEnemyContainerPanel;
+            GameStage.CurrentState = 0;
             GameStage.CurrentState++;
             GameStage.NextState();
             stageLabel.Text = "STAGE " + GameStage.CurrentState.ToString();
@@ -213,20 +213,44 @@ namespace GameTank
         private void renderTimer_Tick(object sender, EventArgs e)
         {
             Render();
-            if (GameStage.NumberEnemy == 0)
+            if (GameStage.NumberEnemy == 0|| GameStage.PlayerTank == null)
             {
+                statusLabel.Text = "You Win";
+                using (Image cupImg = Image.FromFile("../../Image/cup.png"))
+                {
+                    cupPtrb.Image = new Bitmap(cupImg);
+                }
                 countDownTimer.Stop();
-                timeTurnScoreLabel.Text = (h * 60 + m * 60 + s).ToString() + "s";
-                scoreTurnLabel.Text = ((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10).ToString();
-                GameStage.TotalTime.Add(h * 60 + m * 60 + s);
-                GameStage.TotalScore.Add((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10);
-                totalScoreLabel.Text = GameStage.TotalScore.Sum().ToString();
-                totalTimeLabel.Text = GameStage.TotalTime.Sum().ToString() + "s";
+                timeTurnScoreLabel.Text = "Time in turn\n\t" + (h * 60 + m * 60 + s).ToString() + "s";
+                scoreTurnLabel.Text = "Score in turn\n\t" + ((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10).ToString();
+                if (GameStage.CurrentState != GameStage.TotalScore.Count)
+                {
+                    GameStage.TotalTime.Add(h * 60 + m * 60 + s);
+                    GameStage.TotalScore.Add((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10);
+                }
+                else
+                {
+                    GameStage.TotalTime[GameStage.CurrentState - 1] = h * 60 + m * 60 + s;
+                    GameStage.TotalScore[GameStage.CurrentState - 1] = (GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10;
+                }
+                totalScoreLabel.Text = "Total Score: " + GameStage.TotalScore.Sum().ToString();
+                totalTimeLabel.Text = "Total Time: " + GameStage.TotalTime.Sum().ToString() + "s";
                 renderTimer.Stop();
                 
                 renderTimer.Tick -= renderTimer_Tick;
                 modalPanel.Visible = true;
                 modalPanel.BringToFront();
+                if (GameStage.PlayerTank == null)
+                {
+                    statusLabel.Text = "You Lose";
+                    using (Image loseImg = Image.FromFile("../../Image/lose.png"))
+                    {
+                        cupPtrb.Image = new Bitmap(loseImg);
+                    }
+                    nextStagePtrb.Enabled = false;
+                    homePtrb.Location = nextStagePtrb.Location;
+                    homePtrb.BringToFront();
+                }
             }
         }
 
@@ -235,12 +259,35 @@ namespace GameTank
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn về màn hình chính ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
             {
+                OffTimer();
+                EnemySpawner.spawnLocation.Clear();
                 Close();
-                Dispose();
             }
             
         }
 
+        private void exitPtrb_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn thoát game ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                OffTimer();
+                EnemySpawner.spawnLocation.Clear();
+                Close();
+                this.Owner.Close();
+            }
+        }
+        private void OffTimer()
+        {
+            renderTimer.Stop();
+            renderTimer.Tick -= EnemyMoveTimer_Tick;
+            enemyFireTimer.Stop();
+            enemyFireTimer.Tick -= EnemyMoveTimer_Tick;
+            enemyMoveTimer.Stop();
+            enemyMoveTimer.Tick -= EnemyMoveTimer_Tick;
+            countDownTimer.Stop();
+            countDownTimer.Tick -= EnemyMoveTimer_Tick;
+        }
         private async void nextStagePtrb_Click(object sender, EventArgs e)
         {
             GameStage.ClearStage();
@@ -259,6 +306,7 @@ namespace GameTank
 
         private async void againPtrb_Click(object sender, EventArgs e)
         {
+            OffTimer();
             GameStage.ClearStage();
             GameStage.NextState();
             await Task.Delay(2000);

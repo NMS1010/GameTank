@@ -32,7 +32,7 @@ namespace GameTank.MyObjects
             t = new Timer();
             t.Tick += T_Tick;
             t.Interval = bulletSpeed;
-            explodePtrb = new PictureBox() {Width = 40, Height = 40, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Transparent };
+            explodePtrb = new PictureBox() {Width = 40, Height = 40, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Black };
             using (Image explodeImg = Image.FromFile("../../Image/explode.png"))
             {
                 explodePtrb.Image = new Bitmap(explodeImg);

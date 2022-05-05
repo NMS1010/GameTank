@@ -10,6 +10,7 @@ namespace GameTank.MyObjects
 {
     internal class PlayerTank: Tank
     {
+        public bool IsDestroy { get; set; } = false;
         public PlayerTank(Point loc, bool isOfPlayer, Color bulletColor, int bulletSpeed, int bulletDamage, int health) :base(loc, isOfPlayer, bulletColor, bulletSpeed, bulletDamage, health)
         {
             SrcFile = "../../Image/playertank.png";

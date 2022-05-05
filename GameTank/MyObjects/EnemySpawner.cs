@@ -61,7 +61,13 @@ namespace GameTank.MyObjects
             {
                 if (o.LockMove)
                 {
-                    GameStage.MainGamePnl.Controls.AddRange(spawnLocation.ToArray());
+                    foreach(PictureBox p in spawnLocation)
+                    {
+                        if(p.Location.X == o.Loc.X && p.Location.Y == o.Loc.Y)
+                        {
+                            GameStage.MainGamePnl.Controls.Add(p);
+                        }
+                    }
                 }
                 else
                 {
@@ -93,9 +99,6 @@ namespace GameTank.MyObjects
                     GameStage.MainGamePnl.Controls.Remove(p);
                 });
                 (sender as Timer).Stop();
-            }
-            else
-            {
             }
         }
     }

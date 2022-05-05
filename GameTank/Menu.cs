@@ -20,8 +20,11 @@ namespace GameTank
         private void playBtn_Click(object sender, EventArgs e)
         {
             Game game = new Game();
+            game.Owner = this;
             Hide();
             game.ShowDialog();
+            if(!this.IsDisposed)
+                Show();
         }
 
         private void aboutBtn_Click(object sender, EventArgs e)

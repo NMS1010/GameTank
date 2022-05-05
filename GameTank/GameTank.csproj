@@ -67,7 +67,6 @@
     <Compile Include="MyObjects\EnemySpawner.cs" />
     <Compile Include="MyObjects\EnemyTank.cs" />
     <Compile Include="MyObjects\GameStage.cs" />
-    <Compile Include="MyObjects\Item.cs" />
     <Compile Include="MyObjects\Obstacle.cs" />
     <Compile Include="MyObjects\PartialObstacle.cs" />
     <Compile Include="MyObjects\PlayerTank.cs" />

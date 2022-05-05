@@ -81,7 +81,7 @@ namespace GameTank.MyObjects
             Bound.DrawBound();
             EnemyPerTurn = 2;
             NumberEnemy = 10;
-            MaxNumberEnemy = 10;
+            MaxNumberEnemy = NumberEnemy;
             DisplayCurrentNumberEnemy();
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
@@ -125,28 +125,28 @@ namespace GameTank.MyObjects
             Bound.DrawBound();
             EnemyPerTurn = 3;
             NumberEnemy = 15;
-            MaxNumberEnemy = 15;
+            MaxNumberEnemy = NumberEnemy;
             DisplayCurrentNumberEnemy();
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
             EnemyTanks = new List<EnemyTank>();
 
             List<Tuple<Point, int, int, bool>> obs = new List<Tuple<Point, int, int, bool>>() {
-                new Tuple<Point, int, int, bool>(new Point(80, 180), 40, 180, true),
-                new Tuple<Point, int, int, bool>(new Point(200, 180), 40, 180, true),
-                new Tuple<Point, int, int, bool>(new Point(320, 180), 40, 140, true),
-                new Tuple<Point, int, int, bool>(new Point(360, 220), 80, 60, false),
-                new Tuple<Point, int, int, bool>(new Point(440, 180), 40, 140, true),
-                new Tuple<Point, int, int, bool>(new Point(560, 180), 40, 180, true),
-                new Tuple<Point, int, int, bool>(new Point(680, 180), 40, 180, true),
-                new Tuple<Point, int, int, bool>(new Point(20, 420), 40, 20, true),
-                new Tuple<Point, int, int, bool>(new Point(20, 440), 40, 20, false),
-                new Tuple<Point, int, int, bool>(new Point(120, 420), 120, 40, true),
-                new Tuple<Point, int, int, bool>(new Point(320, 380), 40, 40, true),
-                new Tuple<Point, int, int, bool>(new Point(440, 380), 40, 40, true),
-                new Tuple<Point, int, int, bool>(new Point(560, 420), 120, 40, true),
-                new Tuple<Point, int, int, bool>(new Point(740, 420), 40, 20, true),
-                new Tuple<Point, int, int, bool>(new Point(740, 440), 40, 20, false),
+                new Tuple<Point, int, int, bool>(new Point(283 + 30, 70), 180, 60, true),
+                new Tuple<Point, int, int, bool>(new Point(343 + 30, 130), 60, 40, false),
+                new Tuple<Point, int, int, bool>(new Point(131 + 30, 170), 480, 50, true),
+                new Tuple<Point, int, int, bool>(new Point(192 + 30, 220), 360, 50, true),
+                new Tuple<Point, int, int, bool>(new Point(232 + 30, 270), 280, 50, true),
+                new Tuple<Point, int, int, bool>(new Point(272 + 30, 320), 200, 60, true),
+                new Tuple<Point, int, int, bool>(new Point(232 + 30, 380), 40, 60, true),
+                new Tuple<Point, int, int, bool>(new Point(470 + 30, 380), 40, 60, true),
+                new Tuple<Point, int, int, bool>(new Point(152 + 30, 487), 80, 40, false),
+                new Tuple<Point, int, int, bool>(new Point(510 + 30, 487), 80, 40, false),
+                new Tuple<Point, int, int, bool>(new Point(283 + 30, 562), 180, 40, true),
+                new Tuple<Point, int, int, bool>(new Point(20, 270), 40, 80, true),
+                new Tuple<Point, int, int, bool>(new Point(740, 270), 40, 80, true),
+                new Tuple<Point, int, int, bool>(new Point(60, 290), 40, 40, true),
+                new Tuple<Point, int, int, bool>(new Point(700, 290), 40, 40, true),
             };
             for (int i = 0; i < obs.Count; i++)
             {
@@ -161,7 +161,7 @@ namespace GameTank.MyObjects
             MainGamePnl.Controls.Clear();
             CurrentNumberEnemyContainer.Controls.Clear();
             EnemySpawner.spawnLocation.Clear();
-            PlayerTank.Bullets.Clear();
+            PlayerTank?.Bullets.Clear();
             PartialObstacle = null;
             ObstaclesStage = null;
             EnemyTanks = null;
@@ -182,6 +182,8 @@ namespace GameTank.MyObjects
                     Stage2();
                     break;
             }
+            PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: 100, bulletDamage: 20, health: (int)TANK.PLAYER_HEALTH);
+            GameStage.PlayerTank = playerTank;
         }
     }
 }
