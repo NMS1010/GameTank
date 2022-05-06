@@ -105,14 +105,23 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Image\againBtn.png" />
+    <Content Include="Image\backgroundMenu.png" />
+    <Content Include="Image\cup.png" />
+    <Content Include="Image\enemy1.bmp" />
+    <Content Include="Image\enemy2.bmp" />
+    <Content Include="Image\enemy3.bmp" />
     <Content Include="Image\enemyScore.bmp" />
+    <Content Include="Image\exitBtn.png" />
+    <Content Include="Image\explode.png" />
     <Content Include="Image\heart.png" />
-    <Content Include="Image\homeBtn.png" />
-    <Content Include="Image\love.jpg" />
-    <Content Include="Image\nextBtn.png" />
-    <Content Include="Image\playertank.bmp" />
-    <Content Include="Image\spaceBackground.jpg" />
+    <Content Include="Image\homeBtn.jpg" />
+    <Content Include="Image\lose.png" />
+    <Content Include="Image\nextBtn.jpg" />
+    <Content Include="Image\playertank.png" />
+    <Content Include="Image\portal.png" />
+    <Content Include="Image\replayBtn.jpg" />
+    <Content Include="Image\t.png" />
+    <Content Include="Image\tree.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

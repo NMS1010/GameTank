@@ -88,25 +88,29 @@ namespace GameTank
 
         private void mainGamePnl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            switch (e.KeyCode)
+            try
             {
-                case Keys.Up:
-                    GameStage.PlayerTank.Move(ACTION.MOVEUP);
-                    break;
-                case Keys.Down:
-                    GameStage.PlayerTank.Move(ACTION.MOVEDOWN);
-                    break;
-                case Keys.Left:
-                    GameStage.PlayerTank.Move(ACTION.MOVELEFT);
-                    break;
-                case Keys.Right:
-                    GameStage.PlayerTank.Move(ACTION.MOVERIGHT);
-                    break;
-                case Keys.Space:
-                    GameStage.PlayerTank.Fire();
-                    break;
+                switch (e.KeyCode)
+                {
+                    case Keys.Up:
+                        GameStage.PlayerTank?.Move(ACTION.MOVEUP);
+                        break;
+                    case Keys.Down:
+                        GameStage.PlayerTank?.Move(ACTION.MOVEDOWN);
+                        break;
+                    case Keys.Left:
+                        GameStage.PlayerTank?.Move(ACTION.MOVELEFT);
+                        break;
+                    case Keys.Right:
+                        GameStage.PlayerTank?.Move(ACTION.MOVERIGHT);
+                        break;
+                    case Keys.Space:
+                        GameStage.PlayerTank?.Fire();
+                        break;
 
+                }
             }
+            catch { }
             Render();
         }
 

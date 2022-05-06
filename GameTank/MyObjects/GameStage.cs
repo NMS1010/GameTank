@@ -17,9 +17,9 @@ namespace GameTank.MyObjects
         public static List<PartialObstacle> PartialObstacle;
 
         public static List<EnemyTank> EnemyTanks;
+        public static PlayerTank PlayerTank;   
         public static List<Point> SpawEnemyPoint;
 
-        public static PlayerTank PlayerTank;
 
         public static PictureBox TotalPlayerHealth;
         public static PictureBox CurrentPlayerHealth;
@@ -29,8 +29,8 @@ namespace GameTank.MyObjects
         public static int NumberEnemy;
         public static int MaxNumberEnemy;
         public static int CurrentState = 0;
-        public static Bitmap avatarTank;
         public static int MaxState = 2;
+        public static Bitmap avatarTank;
         public static List<int> TotalScore;
         public static List<int> TotalTime;
 
