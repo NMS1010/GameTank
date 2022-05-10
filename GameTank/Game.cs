@@ -30,7 +30,6 @@ namespace GameTank
             InitializeComponent();
             
         }
-
         public void InitGraphics()
         {
             bufferedGraphicsContext = BufferedGraphicsManager.Current;
@@ -113,7 +112,6 @@ namespace GameTank
                         getFire = false;
                         GameStage.PlayerTank?.Fire();
                         break;
-
                 }
             }
             catch { }
@@ -213,7 +211,7 @@ namespace GameTank
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
             GameStage.CurrentNumberEnemyContainer = numberEnemyContainerPanel;
-            GameStage.CurrentState = 0;
+            GameStage.CurrentState = 1;
             GameStage.CurrentState++;
             GameStage.NextState();
             stageLabel.Text = "STAGE " + GameStage.CurrentState.ToString();
@@ -269,6 +267,11 @@ namespace GameTank
                 renderTimer.Tick -= renderTimer_Tick;
                 modalPanel.Visible = true;
                 modalPanel.BringToFront();
+                nextStagePtrb.Enabled = true;
+                homePtrb.Location = new Point(nextStagePtrb.Location.X + 97, nextStagePtrb.Location.Y);
+                GameStage.HealthPlayer = GameStage.PlayerTank.Health;
+                GameStage.DamagePlayer = GameStage.PlayerTank.BulletDamage;
+                GameStage.BulletSpeedPlayer = GameStage.PlayerTank.BulletSpeed;
                 if (GameStage.PlayerTank == null)
                 {
                     statusLabel.Text = "You Lose";
@@ -279,6 +282,9 @@ namespace GameTank
                     nextStagePtrb.Enabled = false;
                     homePtrb.Location = nextStagePtrb.Location;
                     homePtrb.BringToFront();
+                    GameStage.HealthPlayer = (int)TANK.PLAYER_HEALTH;
+                    GameStage.DamagePlayer = 20;
+                    GameStage.BulletSpeedPlayer = 100;
                 }
             }
         }

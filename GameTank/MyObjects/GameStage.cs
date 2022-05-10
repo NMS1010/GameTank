@@ -26,6 +26,7 @@ namespace GameTank.MyObjects
         public static Panel CurrentNumberEnemyContainer;
         public static PictureBox PlayerSkin;
         public static Bitmap avatarTank;
+
         public static int HealthPlayer = 100;
         public static int DamagePlayer = 20;
         public static int BulletSpeedPlayer = 100;
@@ -80,13 +81,13 @@ namespace GameTank.MyObjects
         }
         public static void Stage1()
         {
+            ItemSpawner.ItemSpawns.Clear();
             NumberItem = 3;
             CurrentState = 1;
             Bound.DrawBound();
             EnemyPerTurn = 2;
-            NumberEnemy = 10;
+            NumberEnemy = 7;
             MaxNumberEnemy = NumberEnemy;
-            DisplayCurrentNumberEnemy();
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
             EnemyTanks = new List<EnemyTank>();
@@ -121,17 +122,18 @@ namespace GameTank.MyObjects
                 PartialObstacle.AddRange(temp.Obs);
             }
             DrawStage(ObstaclesStage);
+            DisplayCurrentNumberEnemy();
         }
 
         public static void Stage2()
         {
+            ItemSpawner.ItemSpawns.Clear();
             NumberItem = 5;
             CurrentState = 2;
             Bound.DrawBound();
             EnemyPerTurn = 3;
-            NumberEnemy = 15;
+            NumberEnemy = 12;
             MaxNumberEnemy = NumberEnemy;
-            DisplayCurrentNumberEnemy();
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
             EnemyTanks = new List<EnemyTank>();
@@ -160,6 +162,7 @@ namespace GameTank.MyObjects
                 PartialObstacle.AddRange(temp.Obs);
             }
             DrawStage(ObstaclesStage);
+            DisplayCurrentNumberEnemy();
         }
         public static void ClearStage()
         {
@@ -188,8 +191,9 @@ namespace GameTank.MyObjects
                     break;
             }
             PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: BulletSpeedPlayer, bulletDamage: DamagePlayer, health: HealthPlayer);
-            playerTank.UpdateAvatar(PlayerSkin.Tag.ToString());
             PlayerTank = playerTank;
+            GameStage.CurrentPlayerHealth.Width = (GameStage.PlayerTank.Health * GameStage.TotalPlayerHealth.Width) / (int)TANK.PLAYER_HEALTH;
+            playerTank.UpdateAvatar(PlayerSkin.Tag.ToString());
         }
     }
 }

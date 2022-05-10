@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Menu));
             this.playBtn = new System.Windows.Forms.Button();
             this.aboutBtn = new System.Windows.Forms.Button();
             this.quitBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.InfoToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // playBtn
@@ -96,8 +98,11 @@
             this.Controls.Add(this.playBtn);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(622, 530);
+            this.MinimumSize = new System.Drawing.Size(622, 530);
             this.Name = "Menu";
-            this.Text = "Menu";
+            this.Text = "Tank Battle";
+            this.InfoToolTip.SetToolTip(this, "Code by group (NMS, NDT, MBH)");
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,5 +114,6 @@
         private System.Windows.Forms.Button aboutBtn;
         private System.Windows.Forms.Button quitBtn;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolTip InfoToolTip;
     }
 }

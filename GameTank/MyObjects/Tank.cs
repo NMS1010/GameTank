@@ -102,7 +102,7 @@ namespace GameTank.MyObjects
                 Loc = NextLoc;
             }
             Item i = Utilities.IsCollisionItem();
-            if (i != null)
+            if (i != null && isOfPlayer)
             {
                 if(i is HealthItem)
                 {
