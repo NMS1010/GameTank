@@ -101,6 +101,29 @@ namespace GameTank.MyObjects
             {
                 Loc = NextLoc;
             }
+            Item i = Utilities.IsCollisionItem();
+            if (i != null)
+            {
+                if(i is HealthItem)
+                {
+                    Health += (i as HealthItem).Health;
+                    if(Health > (int)TANK.PLAYER_HEALTH)
+                    {
+                        Health = (int)TANK.PLAYER_HEALTH;
+                    }
+                    GameStage.CurrentPlayerHealth.Width = (GameStage.PlayerTank.Health * GameStage.TotalPlayerHealth.Width) / (int)TANK.PLAYER_HEALTH;
+                }
+                else if (i is DamageItem)
+                {
+                    BulletDamage += (i as DamageItem).Damage;
+                }
+                else if (i is BulletSpeedItem)
+                {
+                    BulletSpeed -= (i as BulletSpeedItem).BulletSpeed;
+                }
+                ItemSpawner.ItemSpawns.Remove(i);
+                GameStage.MainGamePnl.Controls.Remove(i.avatarItem);
+            }
             RotateTank();
         }
         public virtual void DrawTank(Graphics grp)

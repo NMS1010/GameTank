@@ -22,6 +22,8 @@ namespace GameTank
         Timer enemyMoveTimer;
         Timer countDownTimer;
         int m, s, h;
+        PictureBox currSkin;
+        bool getFire = false;
 
         public Game()
         {
@@ -54,7 +56,7 @@ namespace GameTank
             }
             bufferedGraphics.Graphics.Clear(Color.Black);
             playerTankDamageLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
-            playerTankAttackSpeedLabel.Text = GameStage.PlayerTank.BulletDamage.ToString();
+            playerTankAttackSpeedLabel.Text = GameStage.PlayerTank.BulletSpeed.ToString();
             GameStage.PlayerTank.DrawTank(bufferedGraphics.Graphics);
             GameStage.PlayerTank.DrawBullets(bufferedGraphics.Graphics);
 
@@ -88,6 +90,7 @@ namespace GameTank
 
         private void mainGamePnl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            
             try
             {
                 switch (e.KeyCode)
@@ -105,6 +108,9 @@ namespace GameTank
                         GameStage.PlayerTank?.Move(ACTION.MOVERIGHT);
                         break;
                     case Keys.Space:
+                        if (!getFire)
+                            return;
+                        getFire = false;
                         GameStage.PlayerTank?.Fire();
                         break;
 
@@ -156,6 +162,7 @@ namespace GameTank
                 }
                 countDownLabel.Text = String.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
             }));
+            getFire = true;
         }
 
         private void SetImage()
@@ -180,10 +187,28 @@ namespace GameTank
             {
                 exitPtrb.Image = new Bitmap(exitImg);
             }
+            using (Image img = Image.FromFile("../../Image/skin1player.png"))
+            {
+                skin1playerPtrb.Image = new Bitmap(img);
+                skin1playerPtrb.Tag = "../../Image/skin1player.png";
+            }
+            using (Image img = Image.FromFile("../../Image/skin2player.png"))
+            {
+                skin2playerPtrb.Image = new Bitmap(img);
+                skin2playerPtrb.Tag = "../../Image/skin2player.png";
+            }
+            using (Image img = Image.FromFile("../../Image/skin3player.png"))
+            {
+                skin3playerPtrb.Image = new Bitmap(img);
+                skin3playerPtrb.Tag = "../../Image/skin3player.png";
+            }
         }
         private void InitGame()
         {
             SetImage();
+            currSkin = skin1playerPtrb;
+            currSkin.Parent.BackColor = Color.White;
+            GameStage.PlayerSkin = currSkin;
             GameStage.MainGamePnl = this.mainGamePnl;
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
@@ -292,6 +317,16 @@ namespace GameTank
             countDownTimer.Stop();
             countDownTimer.Tick -= EnemyMoveTimer_Tick;
         }
+
+        private void ChangeSkinTank(object sender, EventArgs e)
+        {
+            currSkin.Parent.BackColor = SystemColors.ActiveCaptionText;
+            currSkin = (sender as PictureBox);
+            currSkin.Parent.BackColor = Color.White;
+            GameStage.PlayerSkin = currSkin;
+            GameStage.PlayerTank?.UpdateAvatar(currSkin.Tag.ToString());
+        }
+
         private async void nextStagePtrb_Click(object sender, EventArgs e)
         {
             GameStage.ClearStage();

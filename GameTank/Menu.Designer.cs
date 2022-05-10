@@ -95,6 +95,7 @@
             this.Controls.Add(this.aboutBtn);
             this.Controls.Add(this.playBtn);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Menu";
             this.Text = "Menu";
             this.ResumeLayout(false);

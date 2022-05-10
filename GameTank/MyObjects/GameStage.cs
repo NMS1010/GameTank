@@ -24,16 +24,19 @@ namespace GameTank.MyObjects
         public static PictureBox TotalPlayerHealth;
         public static PictureBox CurrentPlayerHealth;
         public static Panel CurrentNumberEnemyContainer;
-
+        public static PictureBox PlayerSkin;
+        public static Bitmap avatarTank;
+        public static int HealthPlayer = 100;
+        public static int DamagePlayer = 20;
+        public static int BulletSpeedPlayer = 100;
         public static int EnemyPerTurn;
         public static int NumberEnemy;
         public static int MaxNumberEnemy;
         public static int CurrentState = 0;
         public static int MaxState = 2;
-        public static Bitmap avatarTank;
         public static List<int> TotalScore;
         public static List<int> TotalTime;
-
+        public static int NumberItem;
         static GameStage()
         {
             SpawEnemyPoint = new List<Point>() {
@@ -42,7 +45,7 @@ namespace GameTank.MyObjects
                 new Point(400,30),
                 new Point(600,30)
             };
-            using (Image tankImg = Image.FromFile("../../Image/enemyScore.bmp"))
+            using (Image tankImg = Image.FromFile("../../Image/enemy1.bmp"))
             {
                 avatarTank = new Bitmap(tankImg);
             }
@@ -77,6 +80,7 @@ namespace GameTank.MyObjects
         }
         public static void Stage1()
         {
+            NumberItem = 3;
             CurrentState = 1;
             Bound.DrawBound();
             EnemyPerTurn = 2;
@@ -121,6 +125,7 @@ namespace GameTank.MyObjects
 
         public static void Stage2()
         {
+            NumberItem = 5;
             CurrentState = 2;
             Bound.DrawBound();
             EnemyPerTurn = 3;
@@ -182,8 +187,9 @@ namespace GameTank.MyObjects
                     Stage2();
                     break;
             }
-            PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: 100, bulletDamage: 20, health: (int)TANK.PLAYER_HEALTH);
-            GameStage.PlayerTank = playerTank;
+            PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: BulletSpeedPlayer, bulletDamage: DamagePlayer, health: HealthPlayer);
+            playerTank.UpdateAvatar(PlayerSkin.Tag.ToString());
+            PlayerTank = playerTank;
         }
     }
 }

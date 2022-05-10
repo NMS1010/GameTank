@@ -65,9 +65,14 @@
     </Compile>
     <Compile Include="MyObjects\Bound.cs" />
     <Compile Include="MyObjects\Bullet.cs" />
+    <Compile Include="MyObjects\BulletSpeedItem.cs" />
+    <Compile Include="MyObjects\DamageItem.cs" />
     <Compile Include="MyObjects\EnemySpawner.cs" />
     <Compile Include="MyObjects\EnemyTank.cs" />
     <Compile Include="MyObjects\GameStage.cs" />
+    <Compile Include="MyObjects\HealthItem.cs" />
+    <Compile Include="MyObjects\Item.cs" />
+    <Compile Include="MyObjects\ItemSpawner.cs" />
     <Compile Include="MyObjects\Obstacle.cs" />
     <Compile Include="MyObjects\PartialObstacle.cs" />
     <Compile Include="MyObjects\PlayerTank.cs" />
@@ -110,16 +115,19 @@
     <Content Include="Image\enemy1.bmp" />
     <Content Include="Image\enemy2.bmp" />
     <Content Include="Image\enemy3.bmp" />
-    <Content Include="Image\enemyScore.bmp" />
+    <Content Include="Image\enemy4.bmp" />
+    <Content Include="Image\enemy5.bmp" />
     <Content Include="Image\exitBtn.png" />
     <Content Include="Image\explode.png" />
     <Content Include="Image\heart.png" />
     <Content Include="Image\homeBtn.jpg" />
     <Content Include="Image\lose.png" />
     <Content Include="Image\nextBtn.jpg" />
-    <Content Include="Image\playertank.png" />
     <Content Include="Image\portal.png" />
     <Content Include="Image\replayBtn.jpg" />
+    <Content Include="Image\skin1player.png" />
+    <Content Include="Image\skin2player.png" />
+    <Content Include="Image\skin3player.png" />
     <Content Include="Image\t.png" />
     <Content Include="Image\tree.jpg" />
   </ItemGroup>

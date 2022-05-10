@@ -90,6 +90,21 @@ namespace GameTank.MyObjects
         {
             return CheckCollisionTank(nextLoc, GameStage.EnemyTanks, tank);
         }
+        private static Item CheckCollisionItem()
+        {
+            foreach (Item i in ItemSpawner.ItemSpawns)
+            {
+                if (i.avatarItem.Bounds.IntersectsWith(new Rectangle(GameStage.PlayerTank.Loc, new Size(GameStage.PlayerTank.Width, GameStage.PlayerTank.Height))))
+                {
+                    return i;
+                }
+            }
+            return null;
+        }
+        public static Item IsCollisionItem()
+        {
+            return CheckCollisionItem();
+        }
         public static bool CheckHitTank(Tank tank, Point nextLoc, int width, int height)
         {
             PictureBox tankPtrb = new PictureBox() { Location = tank.Loc, Width = tank.Width, Height = tank.Height, BackColor = Color.Red };
@@ -166,6 +181,7 @@ namespace GameTank.MyObjects
             {
                 bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
                 explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
+                bullet.IsExplode = true;
                 explodeTimer.Start();
                 if (ob.IsCanDestroy)
                 {
@@ -185,11 +201,17 @@ namespace GameTank.MyObjects
                 {
                     bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
                     explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
+                    bullet.IsExplode = true;
                     explodeTimer.Start();
                     if (!EnemySpawner.IsLockDamage)
                         enemyTank.Health -= bullet.Damage;
                     if (enemyTank.Health <= 0)
                     {
+                        if (GameStage.NumberItem > 0)
+                        {
+                            ItemSpawner.Spawn(enemyTank);
+                            GameStage.NumberItem--;
+                        }
                         GameStage.EnemyTanks.Remove(enemyTank);
                         GameStage.NumberEnemy--;
                         GameStage.CurrentNumberEnemyContainer.Controls.RemoveAt(GameStage.CurrentNumberEnemyContainer.Controls.Count - 1);
@@ -202,12 +224,16 @@ namespace GameTank.MyObjects
                 if (CheckHitTank(GameStage.PlayerTank, bullet.Loc, bullet.Width, bullet.Height))
                 {
                     bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
+                    bullet.IsExplode = true;
                     explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
                     explodeTimer.Start();
                     GameStage.PlayerTank.Health -= bullet.Damage;
                     GameStage.CurrentPlayerHealth.Width = (GameStage.PlayerTank.Health * GameStage.TotalPlayerHealth.Width) / (int)TANK.PLAYER_HEALTH;
                     if (GameStage.PlayerTank.Health <= 0)
                     {
+                        GameStage.HealthPlayer = GameStage.PlayerTank.Health;
+                        GameStage.DamagePlayer = GameStage.PlayerTank.BulletDamage;
+                        GameStage.BulletSpeedPlayer = GameStage.PlayerTank.BulletSpeed;
                         GameStage.PlayerTank = null;
                     }
                     bullet.IsMoving = false;
@@ -216,6 +242,7 @@ namespace GameTank.MyObjects
             if (Bound.IsCollisionBound(bulletPoint, bullet.Width, bullet.Height, bullet.Direction))
             {
                 bullet.ShowExplode(GetPointCollision(bullet.Direction, bulletPoint));
+                bullet.IsExplode = true;
                 explodeTimer.Tick += new EventHandler((sender, e) => explode_tick(sender, e, bullet));
                 explodeTimer.Start();
                 bullet.IsMoving = false;
@@ -224,6 +251,7 @@ namespace GameTank.MyObjects
         private static void explode_tick(object sender, EventArgs e, Bullet bullet)
         {
             bullet.RemoveExplode();
+            bullet.IsExplode=false;
             (sender as Timer).Stop();
         }
     }

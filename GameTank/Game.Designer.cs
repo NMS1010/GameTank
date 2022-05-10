@@ -55,6 +55,14 @@
             this.stageLabel = new System.Windows.Forms.Label();
             this.countDownLabel = new System.Windows.Forms.Label();
             this.exitPtrb = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.skin3playerPnl = new System.Windows.Forms.Panel();
+            this.skin3playerPtrb = new System.Windows.Forms.PictureBox();
+            this.skinContainerPanel = new System.Windows.Forms.Panel();
+            this.skin1playerPnl = new System.Windows.Forms.Panel();
+            this.skin1playerPtrb = new System.Windows.Forms.PictureBox();
+            this.skin2playerPnl = new System.Windows.Forms.Panel();
+            this.skin2playerPtrb = new System.Windows.Forms.PictureBox();
             this.modalPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cupPtrb)).BeginInit();
             this.panel1.SuspendLayout();
@@ -67,6 +75,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.heartPtrb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barPtrb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitPtrb)).BeginInit();
+            this.skin3playerPnl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.skin3playerPtrb)).BeginInit();
+            this.skinContainerPanel.SuspendLayout();
+            this.skin1playerPnl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.skin1playerPtrb)).BeginInit();
+            this.skin2playerPnl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.skin2playerPtrb)).BeginInit();
             this.SuspendLayout();
             // 
             // mainGamePnl
@@ -306,6 +321,7 @@
             // numberEnemyContainerPanel
             // 
             this.numberEnemyContainerPanel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.numberEnemyContainerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numberEnemyContainerPanel.Location = new System.Drawing.Point(840, 219);
             this.numberEnemyContainerPanel.Name = "numberEnemyContainerPanel";
             this.numberEnemyContainerPanel.Size = new System.Drawing.Size(200, 276);
@@ -367,12 +383,95 @@
             this.exitPtrb.TabStop = false;
             this.exitPtrb.Click += new System.EventHandler(this.exitPtrb_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Font = new System.Drawing.Font("MV Boli", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.MediumBlue;
+            this.label3.Location = new System.Drawing.Point(839, 515);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 25);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Skin";
+            // 
+            // skin3playerPnl
+            // 
+            this.skin3playerPnl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.skin3playerPnl.Controls.Add(this.skin3playerPtrb);
+            this.skin3playerPnl.Location = new System.Drawing.Point(170, 25);
+            this.skin3playerPnl.Name = "skin3playerPnl";
+            this.skin3playerPnl.Size = new System.Drawing.Size(65, 73);
+            this.skin3playerPnl.TabIndex = 14;
+            // 
+            // skin3playerPtrb
+            // 
+            this.skin3playerPtrb.Location = new System.Drawing.Point(9, 8);
+            this.skin3playerPtrb.Name = "skin3playerPtrb";
+            this.skin3playerPtrb.Size = new System.Drawing.Size(45, 55);
+            this.skin3playerPtrb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.skin3playerPtrb.TabIndex = 2;
+            this.skin3playerPtrb.TabStop = false;
+            this.skin3playerPtrb.Click += new System.EventHandler(this.ChangeSkinTank);
+            // 
+            // skinContainerPanel
+            // 
+            this.skinContainerPanel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.skinContainerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.skinContainerPanel.Controls.Add(this.skin2playerPnl);
+            this.skinContainerPanel.Controls.Add(this.skin1playerPnl);
+            this.skinContainerPanel.Controls.Add(this.skin3playerPnl);
+            this.skinContainerPanel.Location = new System.Drawing.Point(839, 543);
+            this.skinContainerPanel.Name = "skinContainerPanel";
+            this.skinContainerPanel.Size = new System.Drawing.Size(241, 129);
+            this.skinContainerPanel.TabIndex = 14;
+            // 
+            // skin1playerPnl
+            // 
+            this.skin1playerPnl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.skin1playerPnl.Controls.Add(this.skin1playerPtrb);
+            this.skin1playerPnl.Location = new System.Drawing.Point(9, 25);
+            this.skin1playerPnl.Name = "skin1playerPnl";
+            this.skin1playerPnl.Size = new System.Drawing.Size(65, 73);
+            this.skin1playerPnl.TabIndex = 15;
+            // 
+            // skin1playerPtrb
+            // 
+            this.skin1playerPtrb.Location = new System.Drawing.Point(9, 8);
+            this.skin1playerPtrb.Name = "skin1playerPtrb";
+            this.skin1playerPtrb.Size = new System.Drawing.Size(45, 55);
+            this.skin1playerPtrb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.skin1playerPtrb.TabIndex = 2;
+            this.skin1playerPtrb.TabStop = false;
+            this.skin1playerPtrb.Click += new System.EventHandler(this.ChangeSkinTank);
+            // 
+            // skin2playerPnl
+            // 
+            this.skin2playerPnl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.skin2playerPnl.Controls.Add(this.skin2playerPtrb);
+            this.skin2playerPnl.Location = new System.Drawing.Point(90, 25);
+            this.skin2playerPnl.Name = "skin2playerPnl";
+            this.skin2playerPnl.Size = new System.Drawing.Size(65, 73);
+            this.skin2playerPnl.TabIndex = 15;
+            // 
+            // skin2playerPtrb
+            // 
+            this.skin2playerPtrb.Location = new System.Drawing.Point(9, 8);
+            this.skin2playerPtrb.Name = "skin2playerPtrb";
+            this.skin2playerPtrb.Size = new System.Drawing.Size(45, 55);
+            this.skin2playerPtrb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.skin2playerPtrb.TabIndex = 2;
+            this.skin2playerPtrb.TabStop = false;
+            this.skin2playerPtrb.Click += new System.EventHandler(this.ChangeSkinTank);
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(1099, 699);
+            this.Controls.Add(this.skinContainerPanel);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.exitPtrb);
             this.Controls.Add(this.countDownLabel);
             this.Controls.Add(this.stageLabel);
@@ -408,6 +507,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.heartPtrb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barPtrb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitPtrb)).EndInit();
+            this.skin3playerPnl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.skin3playerPtrb)).EndInit();
+            this.skinContainerPanel.ResumeLayout(false);
+            this.skin1playerPnl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.skin1playerPtrb)).EndInit();
+            this.skin2playerPnl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.skin2playerPtrb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,6 +548,14 @@
         private System.Windows.Forms.Label stageLabel;
         private System.Windows.Forms.Label countDownLabel;
         private System.Windows.Forms.PictureBox exitPtrb;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel skin3playerPnl;
+        private System.Windows.Forms.PictureBox skin3playerPtrb;
+        private System.Windows.Forms.Panel skinContainerPanel;
+        private System.Windows.Forms.Panel skin2playerPnl;
+        private System.Windows.Forms.PictureBox skin2playerPtrb;
+        private System.Windows.Forms.Panel skin1playerPnl;
+        private System.Windows.Forms.PictureBox skin1playerPtrb;
     }
 }
 

@@ -22,6 +22,7 @@ namespace GameTank.MyObjects
         private Color bulletColor;
         Timer t;
         PictureBox explodePtrb;
+        bool isExplode = false;
         public Bullet(Point loc, DIRECTION direction, bool isOfPlayer, Color color, int bulletSpeed, int damage)
         {
             Loc = loc;
@@ -47,6 +48,7 @@ namespace GameTank.MyObjects
         public int Speed { get => speed; set => speed = value; }
         public bool IsOfPlayer { get => isOfPlayer; set => isOfPlayer = value; }
         public int Damage { get => damage; set => damage = value; }
+        public bool IsExplode { get => isExplode; set => isExplode = value; }
 
         public Point NextLocation()
         {
@@ -93,13 +95,17 @@ namespace GameTank.MyObjects
         public void DrawBullet(Graphics grp)
         {
             grp.FillEllipse(new SolidBrush(BulletColor), new Rectangle(Loc, new Size(Width, Height)));
+            //if (IsExplode)
+            //{
+            //    grp.DrawImage(explodePtrb.Image, explodePtrb.Location);
+            //    //IsExplode = false;
+            //}
         }
 
         public void ShowExplode(Point p)
         {
             explodePtrb.Location = p;
             GameStage.MainGamePnl.Controls.Add(explodePtrb);
-            explodePtrb.SendToBack();
         }
 
         public void RemoveExplode()
