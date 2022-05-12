@@ -86,7 +86,7 @@ namespace GameTank.MyObjects
             CurrentState = 1;
             Bound.DrawBound();
             EnemyPerTurn = 2;
-            NumberEnemy = 2;
+            NumberEnemy = 7;
             MaxNumberEnemy = NumberEnemy;
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
