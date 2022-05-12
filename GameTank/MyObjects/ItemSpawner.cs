@@ -17,15 +17,15 @@ namespace GameTank.MyObjects
             int res = rand.Next(ItemNameSpawns.Count);
             if (res == 0)
             {
-                ItemSpawns.Add(new HealthItem(e.Loc, e.Width, e.Height, "../../Image/healthItem.png"));
+                ItemSpawns.Add(new HealthItem(e.Loc, e.Width, e.Height, Properties.Resources.healthItem));
             }
             else if (res == 1)
             {
-                ItemSpawns.Add(new DamageItem(e.Loc, e.Width, e.Height, "../../Image/damageItem.png"));
+                ItemSpawns.Add(new DamageItem(e.Loc, e.Width, e.Height, Properties.Resources.damageItem));
             }
             else
             {
-                ItemSpawns.Add(new BulletSpeedItem(e.Loc, e.Width, e.Height, "../../Image/bulletSpeedItem.png"));
+                ItemSpawns.Add(new BulletSpeedItem(e.Loc, e.Width, e.Height, Properties.Resources.bulletSpeedItem));
             }
             GameStage.MainGamePnl.Controls.Add(ItemSpawns[ItemSpawns.Count - 1].avatarItem);
         }

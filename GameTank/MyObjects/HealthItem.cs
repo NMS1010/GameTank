@@ -10,7 +10,7 @@ namespace GameTank.MyObjects
     internal class HealthItem : Item
     {
         public int Health { get; set; }
-        public HealthItem(Point loc, int width, int height, string pathFile) : base(loc, width, height, pathFile)
+        public HealthItem(Point loc, int width, int height, Image img) : base(loc, width, height, img)
         {
             Health = 10;
         }

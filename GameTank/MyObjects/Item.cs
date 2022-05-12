@@ -14,19 +14,16 @@ namespace GameTank.MyObjects
         public PictureBox avatarItem;
         public int Width { get; set; }
         public int Height { get; set; }
-        public string PathFile { get; set; }
+        public Image Avatar { get; set; }
 
-        public Item(Point loc, int width, int height, string pathFile)
+        public Item(Point loc, int width, int height, Image img)
         {
             Loc = loc;
             Width = width;
             Height = height;
-            PathFile = pathFile;
-            using (Image img = Image.FromFile(pathFile))
-            {
-                Bitmap bmp = new Bitmap(img);
-                avatarItem = new PictureBox() { Location = Loc, Width = Width, Height = Height, Image = bmp, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Black };
-            }
+            Avatar = img;
+            Bitmap bmp = new Bitmap(img);
+            avatarItem = new PictureBox() { Location = Loc, Width = Width, Height = Height, Image = bmp, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Black };
         }
     }
 }

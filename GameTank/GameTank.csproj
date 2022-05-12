@@ -94,6 +94,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -111,7 +112,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Image\backgroundMenu.png" />
+    <None Include="Image\bulletSpeedItem.png" />
     <Content Include="Image\cup.png" />
+    <None Include="Image\damageItem.png" />
     <Content Include="Image\enemy1.bmp" />
     <Content Include="Image\enemy2.bmp" />
     <Content Include="Image\enemy3.bmp" />
@@ -119,6 +122,7 @@
     <Content Include="Image\enemy5.bmp" />
     <Content Include="Image\exitBtn.png" />
     <Content Include="Image\explode.png" />
+    <None Include="Image\healthItem.png" />
     <Content Include="Image\heart.png" />
     <Content Include="Image\homeBtn.jpg" />
     <Content Include="Image\lose.png" />

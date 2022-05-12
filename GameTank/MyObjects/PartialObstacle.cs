@@ -18,7 +18,6 @@ namespace GameTank.MyObjects
         private PictureBox ob;
 
         private bool isCanDestroy = true;
-        //private static Bitmap obstacleImg = new Bitmap(Image.FromFile("../../Image/love.jpg"));
 
         public bool IsCanDestroy { get => isCanDestroy; set => isCanDestroy = value; }
         public Point Loc { get => loc; set => loc = value; }

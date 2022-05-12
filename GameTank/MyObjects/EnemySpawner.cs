@@ -16,14 +16,14 @@ namespace GameTank.MyObjects
         public static bool IsLockDamage = true;
         public static List<PictureBox> spawnLocation = new List<PictureBox>();
         public static Bitmap portal;
-        public static List<string> enemyAvatar = new List<string> {
-            "../../Image/enemy1.bmp",
-            "../../Image/enemy2.bmp",
-            "../../Image/enemy3.bmp",
+        public static List<Image> enemyAvatar = new List<Image> {
+            Properties.Resources.enemy1,
+            Properties.Resources.enemy2,
+            Properties.Resources.enemy3
         };
         static EnemySpawner()
         {
-            using (Image portalImg = Image.FromFile("../../Image/portal.png"))
+            using (Image portalImg = Properties.Resources.portal)
             {
                 portal = new Bitmap(portalImg);
             }
@@ -53,7 +53,7 @@ namespace GameTank.MyObjects
                     {
                         IsLockDamage = true;
                         EnemyTank t = new EnemyTank(loc: GameStage.SpawEnemyPoint[i], isOfPlayer: false, bulletColor: Color.Red,
-                            bulletSpeed: 100 - 10 * GameStage.CurrentState, bulletDamage: 20 * GameStage.CurrentState, health: (int)TANK.ENEMY_HEALTH * GameStage.CurrentState, srcFile: enemyAvatar[GameStage.CurrentState-1]);
+                            bulletSpeed: 100 - 10 * GameStage.CurrentState, bulletDamage: 20 * GameStage.CurrentState, health: (int)TANK.ENEMY_HEALTH * GameStage.CurrentState, avatar: enemyAvatar[GameStage.CurrentState-1]);
                         t.LockMove = true;
                         GameStage.EnemyTanks.Add(t);
                         spawnLocation.Add(new PictureBox() { Location = t.Loc, Width = t.Width, Height = t.Height, Image = portal, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Black });

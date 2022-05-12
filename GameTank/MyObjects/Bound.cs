@@ -11,7 +11,7 @@ namespace GameTank.MyObjects
 {
     public static class Bound
     {
-        public static Bitmap ImgBound = new Bitmap(Image.FromFile("../../Image/tree.jpg"));
+        public static Bitmap ImgBound = new Bitmap(Properties.Resources.tree);
         public static PictureBox TopBound { get; set; }
         public static PictureBox LeftBound { get; set; }
         public static PictureBox BottomBound { get; set; }

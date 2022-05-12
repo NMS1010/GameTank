@@ -165,40 +165,40 @@ namespace GameTank
 
         private void SetImage()
         {
-            using (Image heartImg = Image.FromFile("../../Image/heart.png"))
+            using (Image heartImg = Properties.Resources.heart)
             {
                 heartPtrb.Image = new Bitmap(heartImg);
             }
-            using (Image nextBtnImg = Image.FromFile("../../Image/nextBtn.jpg"))
+            using (Image nextBtnImg = Properties.Resources.nextBtn)
             {
                 nextStagePtrb.Image = new Bitmap(nextBtnImg);
             }
-            using (Image againBtnImg = Image.FromFile("../../Image/replayBtn.jpg"))
+            using (Image againBtnImg = Properties.Resources.replayBtn)
             {
                 againPtrb.Image = new Bitmap(againBtnImg);
             }
-            using (Image homeBtnImg = Image.FromFile("../../Image/homeBtn.jpg"))
+            using (Image homeBtnImg = Properties.Resources.homeBtn)
             {
                 homePtrb.Image = new Bitmap(homeBtnImg);
             }
-            using (Image exitImg = Image.FromFile("../../Image/exitBtn.png"))
+            using (Image exitImg = Properties.Resources.exitBtn)
             {
                 exitPtrb.Image = new Bitmap(exitImg);
             }
-            using (Image img = Image.FromFile("../../Image/skin1player.png"))
+            using (Image img = Properties.Resources.skin1player)
             {
                 skin1playerPtrb.Image = new Bitmap(img);
-                skin1playerPtrb.Tag = "../../Image/skin1player.png";
+                skin1playerPtrb.Tag = Properties.Resources.skin1player;
             }
-            using (Image img = Image.FromFile("../../Image/skin2player.png"))
+            using (Image img = Properties.Resources.skin2player)
             {
                 skin2playerPtrb.Image = new Bitmap(img);
-                skin2playerPtrb.Tag = "../../Image/skin2player.png";
+                skin2playerPtrb.Tag = Properties.Resources.skin2player;
             }
-            using (Image img = Image.FromFile("../../Image/skin3player.png"))
+            using (Image img = Properties.Resources.skin3player)
             {
                 skin3playerPtrb.Image = new Bitmap(img);
-                skin3playerPtrb.Tag = "../../Image/skin3player.png";
+                skin3playerPtrb.Tag = Properties.Resources.skin3player;
             }
         }
         private void InitGame()
@@ -211,7 +211,7 @@ namespace GameTank
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
             GameStage.CurrentNumberEnemyContainer = numberEnemyContainerPanel;
-            GameStage.CurrentState = 1;
+            GameStage.CurrentState = 0;
             GameStage.CurrentState++;
             GameStage.NextState();
             stageLabel.Text = "STAGE " + GameStage.CurrentState.ToString();
@@ -243,7 +243,7 @@ namespace GameTank
             if (GameStage.NumberEnemy == 0|| GameStage.PlayerTank == null)
             {
                 statusLabel.Text = "You Win";
-                using (Image cupImg = Image.FromFile("../../Image/cup.png"))
+                using (Image cupImg = Properties.Resources.cup)
                 {
                     cupPtrb.Image = new Bitmap(cupImg);
                 }
@@ -269,13 +269,10 @@ namespace GameTank
                 modalPanel.BringToFront();
                 nextStagePtrb.Enabled = true;
                 homePtrb.Location = new Point(nextStagePtrb.Location.X + 97, nextStagePtrb.Location.Y);
-                GameStage.HealthPlayer = GameStage.PlayerTank.Health;
-                GameStage.DamagePlayer = GameStage.PlayerTank.BulletDamage;
-                GameStage.BulletSpeedPlayer = GameStage.PlayerTank.BulletSpeed;
                 if (GameStage.PlayerTank == null)
                 {
                     statusLabel.Text = "You Lose";
-                    using (Image loseImg = Image.FromFile("../../Image/lose.png"))
+                    using (Image loseImg = Properties.Resources.lose)
                     {
                         cupPtrb.Image = new Bitmap(loseImg);
                     }
@@ -286,6 +283,13 @@ namespace GameTank
                     GameStage.DamagePlayer = 20;
                     GameStage.BulletSpeedPlayer = 100;
                 }
+            }
+            else
+            {
+
+                GameStage.HealthPlayer = GameStage.PlayerTank.Health;
+                GameStage.DamagePlayer = GameStage.PlayerTank.BulletDamage;
+                GameStage.BulletSpeedPlayer = GameStage.PlayerTank.BulletSpeed;
             }
         }
 
@@ -330,7 +334,7 @@ namespace GameTank
             currSkin = (sender as PictureBox);
             currSkin.Parent.BackColor = Color.White;
             GameStage.PlayerSkin = currSkin;
-            GameStage.PlayerTank?.UpdateAvatar(currSkin.Tag.ToString());
+            GameStage.PlayerTank?.UpdateAvatar(currSkin.Tag as Image);
         }
 
         private async void nextStagePtrb_Click(object sender, EventArgs e)

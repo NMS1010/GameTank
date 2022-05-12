@@ -12,13 +12,10 @@ namespace GameTank.MyObjects
     {
         private bool lockMove = true;
 
-        public EnemyTank(Point loc, bool isOfPlayer, Color bulletColor, int bulletSpeed, int bulletDamage, int health, string srcFile) : base(loc, isOfPlayer, bulletColor, bulletSpeed, bulletDamage, health)
+        public EnemyTank(Point loc, bool isOfPlayer, Color bulletColor, int bulletSpeed, int bulletDamage, int health, Image avatar) : base(loc, isOfPlayer, bulletColor, bulletSpeed, bulletDamage, health)
         {
-            SrcFile = srcFile;
-            using (Image imgTank = Image.FromFile(SrcFile))
-            {
-                TankAvatar = new Bitmap(imgTank);
-            }
+            ImgTank = avatar;
+            TankAvatar = new Bitmap(avatar);
         }
 
         public bool LockMove { get => lockMove; set => lockMove = value; }

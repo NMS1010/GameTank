@@ -10,7 +10,7 @@ namespace GameTank.MyObjects
     internal class BulletSpeedItem : Item
     {
         public int BulletSpeed { get; set; }
-        public BulletSpeedItem(Point loc, int width, int height, string pathFile) : base(loc, width, height, pathFile)
+        public BulletSpeedItem(Point loc, int width, int height, Image img) : base(loc, width, height, img)
         {
             BulletSpeed = 10;
         }

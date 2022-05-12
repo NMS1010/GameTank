@@ -19,8 +19,8 @@ namespace GameTank.MyObjects
         private int bulletDamage;
         private int bulletSpeed;
 
+        private Image imgTank;
         private Bitmap tankAvatar;
-        private string srcFile;
         private DIRECTION direction = 0;
         private List<Bullet> bullets = new List<Bullet>();
         private bool isOfPlayer;
@@ -37,7 +37,7 @@ namespace GameTank.MyObjects
         public int BulletSpeed { get => bulletSpeed; set => bulletSpeed = value; }
         public int BulletDamage { get => bulletDamage; set => bulletDamage = value; }
         public Bitmap TankAvatar { get => tankAvatar; set => tankAvatar = value; }
-        public string SrcFile { get => srcFile; set => srcFile = value; }
+        public Image ImgTank { get => imgTank; set => imgTank = value; }
 
         public Tank(Point loc, bool isOfPlayer, Color color, int bulletSpeed, int damage, int health)
         {
@@ -50,27 +50,24 @@ namespace GameTank.MyObjects
         }
         private void RotateTank()
         {
-            using (Image imgTank = Image.FromFile(SrcFile))
+            using (Bitmap temp = new Bitmap(imgTank))
             {
-                using (Bitmap temp = new Bitmap(imgTank))
+                switch (Direction)
                 {
-                    switch (Direction)
-                    {
-                        case DIRECTION.UP:
-                            break;
-                        case DIRECTION.RIGHT:
-                            temp.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                            break;
-                        case DIRECTION.DOWN:
-                            temp.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                            break;
-                        case DIRECTION.LEFT:
-                            temp.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                            break;
-                    }
-                    TankAvatar.Dispose();
-                    TankAvatar = new Bitmap(temp);
+                    case DIRECTION.UP:
+                        break;
+                    case DIRECTION.RIGHT:
+                        temp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        break;
+                    case DIRECTION.DOWN:
+                        temp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                        break;
+                    case DIRECTION.LEFT:
+                        temp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                        break;
                 }
+                TankAvatar.Dispose();
+                TankAvatar = new Bitmap(temp);
             }
         }
         

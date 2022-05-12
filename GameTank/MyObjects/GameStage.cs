@@ -46,7 +46,7 @@ namespace GameTank.MyObjects
                 new Point(400,30),
                 new Point(600,30)
             };
-            using (Image tankImg = Image.FromFile("../../Image/enemy1.bmp"))
+            using (Image tankImg = Properties.Resources.enemy1)
             {
                 avatarTank = new Bitmap(tankImg);
             }
@@ -86,7 +86,7 @@ namespace GameTank.MyObjects
             CurrentState = 1;
             Bound.DrawBound();
             EnemyPerTurn = 2;
-            NumberEnemy = 7;
+            NumberEnemy = 2;
             MaxNumberEnemy = NumberEnemy;
             ObstaclesStage = new List<Obstacle>();
             PartialObstacle = new List<PartialObstacle>();
@@ -193,7 +193,7 @@ namespace GameTank.MyObjects
             PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: BulletSpeedPlayer, bulletDamage: DamagePlayer, health: HealthPlayer);
             PlayerTank = playerTank;
             GameStage.CurrentPlayerHealth.Width = (GameStage.PlayerTank.Health * GameStage.TotalPlayerHealth.Width) / (int)TANK.PLAYER_HEALTH;
-            playerTank.UpdateAvatar(PlayerSkin.Tag.ToString());
+            playerTank.UpdateAvatar(PlayerSkin.Tag as Image);
         }
     }
 }

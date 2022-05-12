@@ -10,7 +10,7 @@ namespace GameTank.MyObjects
     internal class DamageItem : Item
     {
         public int Damage { get; set; }
-        public DamageItem(Point loc, int width, int height, string pathFile) : base(loc, width, height, pathFile)
+        public DamageItem(Point loc, int width, int height, Image img) : base(loc, width, height, img)
         {
             Damage = 10;
         }
