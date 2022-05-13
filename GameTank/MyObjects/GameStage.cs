@@ -81,16 +81,6 @@ namespace GameTank.MyObjects
         }
         public static void Stage1()
         {
-            ItemSpawner.ItemSpawns.Clear();
-            NumberItem = 3;
-            CurrentState = 1;
-            Bound.DrawBound();
-            EnemyPerTurn = 2;
-            NumberEnemy = 7;
-            MaxNumberEnemy = NumberEnemy;
-            ObstaclesStage = new List<Obstacle>();
-            PartialObstacle = new List<PartialObstacle>();
-            EnemyTanks = new List<EnemyTank>();
             List<Tuple<Point, int, int, bool>> obs = new List<Tuple<Point, int, int, bool>>() {
                 new Tuple<Point, int, int, bool>(new Point(80, 80), 40, 180, true),
                 new Tuple<Point, int, int, bool>(new Point(200, 80), 40, 180, true),
@@ -115,29 +105,12 @@ namespace GameTank.MyObjects
                 new Tuple<Point, int, int, bool>(new Point(360, 440), 80, 40, false),
                 new Tuple<Point, int, int, bool>(new Point(440, 380), 40, 140, true),
             };
-            for (int i = 0; i < obs.Count; i++)
-            {
-                Obstacle temp = new Obstacle(obs[i].Item1, obs[i].Item2, obs[i].Item3, obs[i].Item4);
-                ObstaclesStage.Add(temp);
-                PartialObstacle.AddRange(temp.Obs);
-            }
-            DrawStage(ObstaclesStage);
-            DisplayCurrentNumberEnemy();
+
+            RenderStage(obs, 3, 1, 2, 7);
         }
 
         public static void Stage2()
         {
-            ItemSpawner.ItemSpawns.Clear();
-            NumberItem = 5;
-            CurrentState = 2;
-            Bound.DrawBound();
-            EnemyPerTurn = 3;
-            NumberEnemy = 12;
-            MaxNumberEnemy = NumberEnemy;
-            ObstaclesStage = new List<Obstacle>();
-            PartialObstacle = new List<PartialObstacle>();
-            EnemyTanks = new List<EnemyTank>();
-
             List<Tuple<Point, int, int, bool>> obs = new List<Tuple<Point, int, int, bool>>() {
                 new Tuple<Point, int, int, bool>(new Point(283 + 30, 70), 180, 60, true),
                 new Tuple<Point, int, int, bool>(new Point(343 + 30, 130), 60, 40, false),
@@ -155,6 +128,21 @@ namespace GameTank.MyObjects
                 new Tuple<Point, int, int, bool>(new Point(60, 290), 40, 40, true),
                 new Tuple<Point, int, int, bool>(new Point(700, 290), 40, 40, true),
             };
+            RenderStage(obs, 5, 2, 3, 12);
+        }
+        private static void RenderStage(List<Tuple<Point, int, int, bool>> obs, int numberItem, int currStage, int enemyPerTurn, int numberEnemy)
+        {
+            ItemSpawner.ItemSpawns.Clear();
+            NumberItem = numberItem;
+            CurrentState = currStage;
+            Bound.DrawBound();
+            EnemyPerTurn = enemyPerTurn;
+            NumberEnemy = numberEnemy;
+            MaxNumberEnemy = NumberEnemy;
+            ObstaclesStage = new List<Obstacle>();
+            PartialObstacle = new List<PartialObstacle>();
+            EnemyTanks = new List<EnemyTank>();
+
             for (int i = 0; i < obs.Count; i++)
             {
                 Obstacle temp = new Obstacle(obs[i].Item1, obs[i].Item2, obs[i].Item3, obs[i].Item4);
