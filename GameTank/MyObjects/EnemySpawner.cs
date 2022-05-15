@@ -19,7 +19,10 @@ namespace GameTank.MyObjects
         public static List<Image> enemyAvatar = new List<Image> {
             Properties.Resources.enemy1,
             Properties.Resources.enemy2,
-            Properties.Resources.enemy3
+            Properties.Resources.enemy3,
+            Properties.Resources.enemy4,
+            Properties.Resources.enemy5,
+            Properties.Resources.skin1player
         };
         static EnemySpawner()
         {
@@ -53,7 +56,7 @@ namespace GameTank.MyObjects
                     {
                         IsLockDamage = true;
                         EnemyTank t = new EnemyTank(loc: GameStage.SpawEnemyPoint[i], isOfPlayer: false, bulletColor: Color.Red,
-                            bulletSpeed: 100 - 10 * GameStage.CurrentState, bulletDamage: 20 * GameStage.CurrentState, health: (int)TANK.ENEMY_HEALTH * GameStage.CurrentState, avatar: enemyAvatar[GameStage.CurrentState-1]);
+                            bulletSpeed: 100 - 10 * GameStage.CurrentStage, bulletDamage: 20 * GameStage.CurrentStage, health: (int)TANK.ENEMY_HEALTH * GameStage.CurrentStage, avatar: enemyAvatar[GameStage.CurrentStage-1]);
                         t.LockMove = true;
                         GameStage.EnemyTanks.Add(t);
                         spawnLocation.Add(new PictureBox() { Location = t.Loc, Width = t.Width, Height = t.Height, Image = portal, SizeMode = PictureBoxSizeMode.StretchImage, BackColor = Color.Black });

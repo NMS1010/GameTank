@@ -24,7 +24,7 @@ namespace GameTank.MyObjects
         {
             base.DrawTank(grp);
             grp.FillRectangle(new SolidBrush(Color.White), new Rectangle(Loc.X, Loc.Y + Height / 2 - 10, Width, 10));
-            grp.FillRectangle(new SolidBrush(Color.Red), new Rectangle(Loc.X, Loc.Y + Height/2 - 10, (Health * Width) / ((int)TANK.ENEMY_HEALTH * GameStage.CurrentState), 10));
+            grp.FillRectangle(new SolidBrush(Color.Red), new Rectangle(Loc.X, Loc.Y + Height/2 - 10, (Health * Width) / ((int)TANK.ENEMY_HEALTH * GameStage.CurrentStage), 10));
         }
     }
 }

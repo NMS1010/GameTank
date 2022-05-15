@@ -92,6 +92,8 @@ namespace GameTank.MyObjects
         }
         private static Item CheckCollisionItem()
         {
+            if (GameStage.PlayerTank == null)
+                return null;
             foreach (Item i in ItemSpawner.ItemSpawns)
             {
                 if (i.avatarItem.Bounds.IntersectsWith(new Rectangle(GameStage.PlayerTank.Loc, new Size(GameStage.PlayerTank.Width, GameStage.PlayerTank.Height))))
@@ -107,6 +109,8 @@ namespace GameTank.MyObjects
         }
         public static bool CheckHitTank(Tank tank, Point nextLoc, int width, int height)
         {
+            if (tank == null)
+                return false;
             PictureBox tankPtrb = new PictureBox() { Location = tank.Loc, Width = tank.Width, Height = tank.Height, BackColor = Color.Red };
             if (tankPtrb.Bounds.IntersectsWith(new Rectangle(nextLoc, new Size(width, height))))
             {
@@ -143,7 +147,7 @@ namespace GameTank.MyObjects
                 && !Bound.IsCollisionBound(e.NextLoc, e.Width, e.Height, e.Direction)
                 && !IsCollisionTank(e.NextLoc, e))
                 return (int)e.Direction;
-            if ((new Rectangle(e.NextLoc, new Size(e.Width, e.Height))).IntersectsWith(
+            if (GameStage.PlayerTank != null && (new Rectangle(e.NextLoc, new Size(e.Width, e.Height))).IntersectsWith(
                 new Rectangle(GameStage.PlayerTank.Loc, new Size(GameStage.PlayerTank.Width, GameStage.PlayerTank.Height))))
             {
                 return (int)e.Direction;

@@ -8,7 +8,7 @@ namespace GameTank.Constants
 {
     internal enum TANK
     {
-        PLAYER_HEALTH = 100,
+        PLAYER_HEALTH = 1000,
         ENEMY_HEALTH = 100
     }
 }

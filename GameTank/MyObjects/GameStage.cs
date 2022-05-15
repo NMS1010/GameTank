@@ -27,14 +27,14 @@ namespace GameTank.MyObjects
         public static PictureBox PlayerSkin;
         public static Bitmap avatarTank;
 
-        public static int HealthPlayer = 100;
+        public static int HealthPlayer = (int)TANK.PLAYER_HEALTH;
         public static int DamagePlayer = 20;
         public static int BulletSpeedPlayer = 100;
         public static int EnemyPerTurn;
         public static int NumberEnemy;
         public static int MaxNumberEnemy;
-        public static int CurrentState = 0;
-        public static int MaxState = 2;
+        public static int CurrentStage = 0;
+        public static int MaxStage = 6;
         public static List<int> TotalScore;
         public static List<int> TotalTime;
         public static int NumberItem;
@@ -106,7 +106,7 @@ namespace GameTank.MyObjects
                 new Tuple<Point, int, int, bool>(new Point(440, 380), 40, 140, true),
             };
 
-            RenderStage(obs, 3, 1, 2, 7);
+            RenderStage(obs,numberItem: 3, currStage: 1, enemyPerTurn: 2, numberEnemy: 7);
         }
 
         public static void Stage2()
@@ -128,13 +128,108 @@ namespace GameTank.MyObjects
                 new Tuple<Point, int, int, bool>(new Point(60, 290), 40, 40, true),
                 new Tuple<Point, int, int, bool>(new Point(700, 290), 40, 40, true),
             };
-            RenderStage(obs, 5, 2, 3, 12);
+            RenderStage(obs, numberItem: 4, currStage: 2, enemyPerTurn: 2, numberEnemy: 9);
+        }
+        public static void Stage3()
+        {
+            List<Tuple<Point, int, int, bool>> obs = new List<Tuple<Point, int, int, bool>>() {
+                new Tuple<Point, int, int, bool>(new Point(70, 70), 60, 100, true), //1
+                new Tuple<Point, int, int, bool>(new Point(210, 0), 60, 100, false), //2
+                new Tuple<Point, int, int, bool>(new Point(210, 70+100), 60, 100, true), //3
+                new Tuple<Point, int, int, bool>(new Point(450, 0), 60, 60, false), //5
+                new Tuple<Point, int, int, bool>(new Point(450, 60), 60, 100, true), //6
+                new Tuple<Point, int, int, bool>(new Point(390, 100), 60, 60, true), //4
+                new Tuple<Point, int, int, bool>(new Point(560, 60), 60, 100, true), //7
+                new Tuple<Point, int, int, bool>(new Point(560, 160), 60, 40, false), //8
+                new Tuple<Point, int, int, bool>(new Point(620, 120), 60, 40, false), //10
+                new Tuple<Point, int, int, bool>(new Point(680, 60), 60, 100, true), //11
+                new Tuple<Point, int, int, bool>(new Point(560, 200), 60, 40, true), //9
+                new Tuple<Point, int, int, bool>(new Point(680, 200), 60, 40, true), //20
+                new Tuple<Point, int, int, bool>(new Point(740, 200), 40, 40, false), //21
+                new Tuple<Point, int, int, bool>(new Point(70, 320), 200, 40, true), //12
+                new Tuple<Point, int, int, bool>(new Point(210, 360), 60, 100, false), //15
+                new Tuple<Point, int, int, bool>(new Point(210, 460), 60, 40, true), //16
+                new Tuple<Point, int, int, bool>(new Point(0, 400), 60, 40, false), //13
+                new Tuple<Point, int, int, bool>(new Point(60, 400), 60, 140, true), //14
+                new Tuple<Point, int, int, bool>(new Point(330, 200), 60, 200, true), //17
+                new Tuple<Point, int, int, bool>(new Point(450, 280), 60, 60, false), //18
+                new Tuple<Point, int, int, bool>(new Point(450, 360), 60, 100, true), //19
+                new Tuple<Point, int, int, bool>(new Point(210, 540), 60, 60, true), //22
+                new Tuple<Point, int, int, bool>(new Point(330, 460), 60, 140, true), //23
+                new Tuple<Point, int, int, bool>(new Point(450, 520), 60, 40, false), //24
+                new Tuple<Point, int, int, bool>(new Point(560, 420), 60, 40, false), //25
+                new Tuple<Point, int, int, bool>(new Point(620, 320), 60, 180, true), //26
+                new Tuple<Point, int, int, bool>(new Point(680, 520), 100, 40, true), //27
+            };
+            RenderStage(obs, numberItem: 5, currStage: 3, enemyPerTurn: 3, numberEnemy: 12);
+        }
+        public static void Stage4()
+        {
+            List<Tuple<Point, int, int, bool>> obs = new List<Tuple<Point, int, int, bool>>() {
+                new Tuple<Point, int, int, bool>(new Point(60, 90), 280, 40, true), //1
+                new Tuple<Point, int, int, bool>(new Point(470, 90), 280, 40, true), //3
+                new Tuple<Point, int, int, bool>(new Point(21, 200), 60, 100, true), //4
+                new Tuple<Point, int, int, bool>(new Point(80, 230), 100, 40, true), //5
+                new Tuple<Point, int, int, bool>(new Point(718, 200), 60, 100, true), //8
+                new Tuple<Point, int, int, bool>(new Point(618, 230), 100, 40, true), //7
+                new Tuple<Point, int, int, bool>(new Point(190, 320), 40, 40, false), //9
+                new Tuple<Point, int, int, bool>(new Point(568, 320), 40, 40, false), //11
+                new Tuple<Point, int, int, bool>(new Point(21, 370), 60, 100, true), //12
+                new Tuple<Point, int, int, bool>(new Point(80, 400), 100, 40, true), //13
+                new Tuple<Point, int, int, bool>(new Point(60, 540), 280, 40, true), //14
+                new Tuple<Point, int, int, bool>(new Point(618, 400), 100, 40, true), //16
+                new Tuple<Point, int, int, bool>(new Point(718, 370), 60, 100, true), //17
+                new Tuple<Point, int, int, bool>(new Point(470, 540), 280, 40, true), //18
+                new Tuple<Point, int, int, bool>(new Point(385, 140), 50, 100, false), //2
+                new Tuple<Point, int, int, bool>(new Point(385, 300), 50, 80, true), //6
+                new Tuple<Point, int, int, bool>(new Point(385, 440), 50, 100, false), //10 - bo 15 
+            };
+            RenderStage(obs, numberItem: 6, currStage: 4, enemyPerTurn: 3, numberEnemy: 15);
+        }
+        public static void Stage5()
+        {
+            List<Tuple<Point, int, int, bool>> obs = new List<Tuple<Point, int, int, bool>>() {
+                new Tuple<Point, int, int, bool>(new Point(90,100), 140, 30, false),
+                new Tuple<Point, int, int, bool>(new Point(90,100), 40, 150, true),
+                new Tuple<Point, int, int, bool>(new Point(190,250), 40, 110, true),
+                new Tuple<Point, int, int, bool>(new Point(90,360), 140, 40, false),
+                new Tuple<Point, int, int, bool>(new Point(300,100), 40, 290, true),
+                new Tuple<Point, int, int, bool>(new Point(380,150), 60, 190, false),
+                new Tuple<Point, int, int, bool>(new Point(480,100), 40, 290, true),
+                new Tuple<Point, int, int, bool>(new Point(630,100), 100, 30, true),
+                new Tuple<Point, int, int, bool>(new Point(590,100), 40, 150, false),
+                new Tuple<Point, int, int, bool>(new Point(690,250), 40, 150, false),
+                new Tuple<Point, int, int, bool>(new Point(590,360), 100, 40, true),
+                new Tuple<Point, int, int, bool>(new Point(120,475), 570, 40, false),
+            };
+            RenderStage(obs, numberItem: 7, currStage: 5, enemyPerTurn: 4, numberEnemy: 16);
+        }
+        public static void Stage6()
+        {
+            List<Tuple<Point, int, int, bool>> obs = new List<Tuple<Point, int, int, bool>>() {
+                new Tuple<Point, int, int, bool>(new Point(200 ,0), 360, 40, false),
+
+                new Tuple<Point, int, int, bool>(new Point(120,100), 60, 180, true),
+                new Tuple<Point, int, int, bool>(new Point(270,100), 60, 150, false),
+                new Tuple<Point, int, int, bool>(new Point(420,100), 60, 150, true),
+                new Tuple<Point, int, int, bool>(new Point(570,100), 60, 180, false),
+                new Tuple<Point, int, int, bool>(new Point(720,100), 60, 150, true),
+
+                new Tuple<Point, int, int, bool>(new Point(0,320), 300, 30, false),
+                new Tuple<Point, int, int, bool>(new Point(440,340), 240, 30, false),
+
+                new Tuple<Point, int, int, bool>(new Point(80,400), 100, 150, true),
+                new Tuple<Point, int, int, bool>(new Point(300,400), 80, 200, false),
+                new Tuple<Point, int, int, bool>(new Point(480,350), 60, 180, true),
+                new Tuple<Point, int, int, bool>(new Point(620,450), 200, 200, true),
+            };
+            RenderStage(obs, numberItem: 8, currStage: 6, enemyPerTurn: 4, numberEnemy: 20);
         }
         private static void RenderStage(List<Tuple<Point, int, int, bool>> obs, int numberItem, int currStage, int enemyPerTurn, int numberEnemy)
         {
             ItemSpawner.ItemSpawns.Clear();
             NumberItem = numberItem;
-            CurrentState = currStage;
+            CurrentStage = currStage;
             Bound.DrawBound();
             EnemyPerTurn = enemyPerTurn;
             NumberEnemy = numberEnemy;
@@ -169,13 +264,25 @@ namespace GameTank.MyObjects
         }
         public static void NextState()
         {
-            switch (CurrentState)
+            switch (CurrentStage)
             {
                 case 1:
                     Stage1();
                     break;
                 case 2:
                     Stage2();
+                    break;
+                case 3:
+                    Stage3();
+                    break;
+                case 4:
+                    Stage4();
+                    break;
+                case 5:
+                    Stage5();
+                    break;
+                case 6:
+                    Stage6();
                     break;
             }
             PlayerTank playerTank = new PlayerTank(loc: new Point(20, 540), isOfPlayer: true, bulletColor: Color.Yellow, bulletSpeed: BulletSpeedPlayer, bulletDamage: DamagePlayer, health: HealthPlayer);

@@ -211,11 +211,11 @@ namespace GameTank
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
             GameStage.CurrentNumberEnemyContainer = numberEnemyContainerPanel;
-            GameStage.CurrentState = 0;
-            GameStage.CurrentState++;
+            GameStage.CurrentStage = 5;
+            GameStage.CurrentStage++;
             GameStage.NextState();
-            stageLabel.Text = "STAGE " + GameStage.CurrentState.ToString();
-
+            stageLabel.Text = "STAGE " + GameStage.CurrentStage.ToString();
+            
             SetTimer();
         }
 
@@ -250,15 +250,15 @@ namespace GameTank
                 countDownTimer.Stop();
                 timeTurnScoreLabel.Text = "Time in turn\n\t" + (h * 60 + m * 60 + s).ToString() + "s";
                 scoreTurnLabel.Text = "Score in turn\n\t" + ((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10).ToString();
-                if (GameStage.CurrentState != GameStage.TotalScore.Count)
+                if (GameStage.CurrentStage != GameStage.TotalScore.Count)
                 {
                     GameStage.TotalTime.Add(h * 60 + m * 60 + s);
                     GameStage.TotalScore.Add((GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10);
                 }
                 else
                 {
-                    GameStage.TotalTime[GameStage.CurrentState - 1] = h * 60 + m * 60 + s;
-                    GameStage.TotalScore[GameStage.CurrentState - 1] = (GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10;
+                    GameStage.TotalTime[GameStage.CurrentStage - 1] = h * 60 + m * 60 + s;
+                    GameStage.TotalScore[GameStage.CurrentStage - 1] = (GameStage.MaxNumberEnemy - GameStage.NumberEnemy) * 10;
                 }
                 totalScoreLabel.Text = "Total Score: " + GameStage.TotalScore.Sum().ToString();
                 totalTimeLabel.Text = "Total Time: " + GameStage.TotalTime.Sum().ToString() + "s";
@@ -286,7 +286,6 @@ namespace GameTank
             }
             else
             {
-
                 GameStage.HealthPlayer = GameStage.PlayerTank.Health;
                 GameStage.DamagePlayer = GameStage.PlayerTank.BulletDamage;
                 GameStage.BulletSpeedPlayer = GameStage.PlayerTank.BulletSpeed;
@@ -340,13 +339,13 @@ namespace GameTank
         private async void nextStagePtrb_Click(object sender, EventArgs e)
         {
             GameStage.ClearStage();
-            GameStage.CurrentState++;
-            if(GameStage.CurrentState > GameStage.MaxState)
+            GameStage.CurrentStage++;
+            if(GameStage.CurrentStage > GameStage.MaxStage)
             {
-                GameStage.CurrentState = GameStage.MaxState;
+                GameStage.CurrentStage = GameStage.MaxStage;
             }
             GameStage.NextState();
-            stageLabel.Text = "STAGE " + GameStage.CurrentState.ToString();
+            stageLabel.Text = "STAGE " + GameStage.CurrentStage.ToString();
             await Task.Delay(2000);
             modalPanel.SendToBack();
             modalPanel.Visible = false;
