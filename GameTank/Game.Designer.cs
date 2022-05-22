@@ -59,10 +59,10 @@
             this.skin3playerPnl = new System.Windows.Forms.Panel();
             this.skin3playerPtrb = new System.Windows.Forms.PictureBox();
             this.skinContainerPanel = new System.Windows.Forms.Panel();
-            this.skin1playerPnl = new System.Windows.Forms.Panel();
-            this.skin1playerPtrb = new System.Windows.Forms.PictureBox();
             this.skin2playerPnl = new System.Windows.Forms.Panel();
             this.skin2playerPtrb = new System.Windows.Forms.PictureBox();
+            this.skin1playerPnl = new System.Windows.Forms.Panel();
+            this.skin1playerPtrb = new System.Windows.Forms.PictureBox();
             this.modalPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cupPtrb)).BeginInit();
             this.panel1.SuspendLayout();
@@ -78,10 +78,10 @@
             this.skin3playerPnl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skin3playerPtrb)).BeginInit();
             this.skinContainerPanel.SuspendLayout();
-            this.skin1playerPnl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.skin1playerPtrb)).BeginInit();
             this.skin2playerPnl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skin2playerPtrb)).BeginInit();
+            this.skin1playerPnl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.skin1playerPtrb)).BeginInit();
             this.SuspendLayout();
             // 
             // mainGamePnl
@@ -426,25 +426,6 @@
             this.skinContainerPanel.Size = new System.Drawing.Size(241, 129);
             this.skinContainerPanel.TabIndex = 14;
             // 
-            // skin1playerPnl
-            // 
-            this.skin1playerPnl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.skin1playerPnl.Controls.Add(this.skin1playerPtrb);
-            this.skin1playerPnl.Location = new System.Drawing.Point(9, 25);
-            this.skin1playerPnl.Name = "skin1playerPnl";
-            this.skin1playerPnl.Size = new System.Drawing.Size(65, 73);
-            this.skin1playerPnl.TabIndex = 15;
-            // 
-            // skin1playerPtrb
-            // 
-            this.skin1playerPtrb.Location = new System.Drawing.Point(9, 8);
-            this.skin1playerPtrb.Name = "skin1playerPtrb";
-            this.skin1playerPtrb.Size = new System.Drawing.Size(45, 55);
-            this.skin1playerPtrb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.skin1playerPtrb.TabIndex = 2;
-            this.skin1playerPtrb.TabStop = false;
-            this.skin1playerPtrb.Click += new System.EventHandler(this.ChangeSkinTank);
-            // 
             // skin2playerPnl
             // 
             this.skin2playerPnl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -463,6 +444,25 @@
             this.skin2playerPtrb.TabIndex = 2;
             this.skin2playerPtrb.TabStop = false;
             this.skin2playerPtrb.Click += new System.EventHandler(this.ChangeSkinTank);
+            // 
+            // skin1playerPnl
+            // 
+            this.skin1playerPnl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.skin1playerPnl.Controls.Add(this.skin1playerPtrb);
+            this.skin1playerPnl.Location = new System.Drawing.Point(9, 25);
+            this.skin1playerPnl.Name = "skin1playerPnl";
+            this.skin1playerPnl.Size = new System.Drawing.Size(65, 73);
+            this.skin1playerPnl.TabIndex = 15;
+            // 
+            // skin1playerPtrb
+            // 
+            this.skin1playerPtrb.Location = new System.Drawing.Point(9, 8);
+            this.skin1playerPtrb.Name = "skin1playerPtrb";
+            this.skin1playerPtrb.Size = new System.Drawing.Size(45, 55);
+            this.skin1playerPtrb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.skin1playerPtrb.TabIndex = 2;
+            this.skin1playerPtrb.TabStop = false;
+            this.skin1playerPtrb.Click += new System.EventHandler(this.ChangeSkinTank);
             // 
             // Game
             // 
@@ -492,6 +492,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Game";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.modalPanel.ResumeLayout(false);
@@ -510,10 +511,10 @@
             this.skin3playerPnl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.skin3playerPtrb)).EndInit();
             this.skinContainerPanel.ResumeLayout(false);
-            this.skin1playerPnl.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.skin1playerPtrb)).EndInit();
             this.skin2playerPnl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.skin2playerPtrb)).EndInit();
+            this.skin1playerPnl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.skin1playerPtrb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

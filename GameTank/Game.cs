@@ -211,7 +211,7 @@ namespace GameTank
             GameStage.TotalPlayerHealth = totalHealthPtrb;
             GameStage.CurrentPlayerHealth = currentHealthPtrb;
             GameStage.CurrentNumberEnemyContainer = numberEnemyContainerPanel;
-            GameStage.CurrentStage = 5;
+            GameStage.CurrentStage = 0;
             GameStage.CurrentStage++;
             GameStage.NextState();
             stageLabel.Text = "STAGE " + GameStage.CurrentStage.ToString();

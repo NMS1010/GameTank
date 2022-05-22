@@ -117,6 +117,10 @@ namespace GameTank.MyObjects
                 else if (i is BulletSpeedItem)
                 {
                     BulletSpeed -= (i as BulletSpeedItem).BulletSpeed;
+                    if(BulletSpeed < 10)
+                    {
+                        BulletSpeed = 10;
+                    }
                 }
                 ItemSpawner.ItemSpawns.Remove(i);
                 GameStage.MainGamePnl.Controls.Remove(i.avatarItem);

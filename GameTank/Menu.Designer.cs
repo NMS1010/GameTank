@@ -100,6 +100,7 @@
             this.MaximumSize = new System.Drawing.Size(622, 530);
             this.MinimumSize = new System.Drawing.Size(622, 530);
             this.Name = "Menu";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tank Battle";
             this.InfoToolTip.SetToolTip(this, "Code by group (NMS, NDT, MBH)");
             this.ResumeLayout(false);
